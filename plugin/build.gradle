@@ -3,6 +3,12 @@ plugins {
     id 'java-gradle-plugin'
 }
 
+apply plugin: 'maven'
+
+archivesBaseName = 'license-tools-plugin'
+group = 'app.kazy'
+version = '0.1.0'
+
 dependencies {
     compileOnly gradleApi()
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

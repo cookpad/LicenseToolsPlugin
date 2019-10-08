@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'app.kazy.license-tools-plugin'
 
 android {
     compileSdkVersion 29
