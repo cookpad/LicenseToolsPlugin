@@ -9,7 +9,8 @@ import org.yaml.snakeyaml.Yaml
 import java.io.File
 import java.lang.IllegalStateException
 
-open class LicenseToolsPluginExtension(val outputHtml: String) {
+open class LicenseToolsPluginExtension {
+    var outputHtml: String = "licenses.html"
 }
 
 class LicenseToolsPlugin : Plugin<Project> {
@@ -17,8 +18,6 @@ class LicenseToolsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         // yamlから情報を引き出す
         // yaml情報からhtmlを生成する
-        // (ingnoreListを取得する)
-        // (depsの情報を引き出す)
         project.extensions.create("licenses", LicenseToolsPluginExtension::class.java)
         project.task("checkLicenses").doLast {
             val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
@@ -28,16 +27,18 @@ class LicenseToolsPlugin : Plugin<Project> {
             val licenseHtml = StringBuffer()
 
             // generate HTML
-            yamlInfoList.forEach { libraryInfo ->
-                licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
-                val assetsDir = project.file("src/main/assets")
-                if (!assetsDir.exists()) {
-                    assetsDir.mkdirs()
+            yamlInfoList
+                .filter { !it.skip }
+                .forEach { libraryInfo ->
+                    licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
+                    val assetsDir = project.file("src/main/assets")
+                    if (!assetsDir.exists()) {
+                        assetsDir.mkdirs()
+                    }
+                    project.logger.info("render ${assetsDir}/${ext.outputHtml}")
+                    project.file("${assetsDir}/${ext.outputHtml}")
+                        .writeText(Templates.wrapWithLayout(licenseHtml))
                 }
-                project.logger.info("render ${assetsDir}/${ext.outputHtml}")
-                project.file("${assetsDir}/${ext.outputHtml}")
-                    .writeText(Templates.wrapWithLayout(licenseHtml))
-            }
 
 
 //            val deps = resolveProjectDependencies(project, setOf(""))
@@ -57,7 +58,8 @@ class LicenseToolsPlugin : Plugin<Project> {
                     url = it["url"].toString(),
                     fileName = it["name"].toString(),
                     license = it["license"].toString(),
-                    licenseUrl = it["licenseUrl"].toString()
+                    licenseUrl = it["licenseUrl"].toString(),
+                    copyrightHolder = it["copyrightHolder"].toString()
                 )
             }
     }
@@ -111,7 +113,7 @@ class LicenseToolsPlugin : Plugin<Project> {
                     libraryName = libraryName,
                     url = libraryUrl,
                     fileName = it.file.name,
-                    license = licenseName,
+                    license = licenseName.toString(),
                     licenseUrl = licenseUrl
                 )
             }

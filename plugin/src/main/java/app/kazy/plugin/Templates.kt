@@ -35,11 +35,13 @@ object Templates {
     }
 
     private fun assertLicenseAndStatement(library: LibraryInfo) {
-        if (!StringGroovyMethods.asBoolean(library.license)) {
+        if (library.license.isNullOrBlank()) {
+            println(library)
             throw NotEnoughInformationException(library)
         }
 
         if (library.getCopyrightStatement() == null) {
+            println(library)
             throw NotEnoughInformationException(library)
         }
 
@@ -48,7 +50,7 @@ object Templates {
     fun wrapWithLayout(content: CharSequence): String {
         val templateFile = "template/layout.html"
         val map = LinkedHashMap<String, String>(1)
-        map["content"] = makeIndent(content, 4)
+        map["content"] = makeIndent(content)
         return templateEngine.createTemplate(readResourceContent(templateFile)).make(map).toString()
     }
 
@@ -59,12 +61,11 @@ object Templates {
         return s.toString()
     }
 
-    @Throws(IOException::class, URISyntaxException::class)
-    fun readResourceContent(filename: String): String {
+    private fun readResourceContent(filename: String): String {
         var templateFileUrl: URL? = Templates::class.java.classLoader.getResource(filename)
             ?: throw FileNotFoundException("File not found: $filename")
 
-        templateFileUrl = URL(templateFileUrl!!.toString())
+        templateFileUrl = URL(templateFileUrl.toString())
         try {
             return IOGroovyMethods.getText(templateFileUrl.openStream(), "UTF-8")
         } catch (e: FileNotFoundException) {
