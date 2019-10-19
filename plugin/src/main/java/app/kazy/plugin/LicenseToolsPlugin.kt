@@ -9,29 +9,66 @@ import org.yaml.snakeyaml.Yaml
 import java.io.File
 import java.lang.IllegalStateException
 
-open class LicenseToolsPluginExtension
+open class LicenseToolsPluginExtension(val outputHtml: String) {
+}
 
 class LicenseToolsPlugin : Plugin<Project> {
     val yaml = Yaml()
     override fun apply(project: Project) {
+        // yamlから情報を引き出す
+        // yaml情報からhtmlを生成する
+        // (ingnoreListを取得する)
+        // (depsの情報を引き出す)
         project.extensions.create("licenses", LicenseToolsPluginExtension::class.java)
         project.task("checkLicenses").doLast {
+            val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
+
             val yamlData = loadYaml(project)
-            val deps = resolveProjectDependencies(project, setOf(""))
-            depToLibraryInfoEntity(project, deps)
-//                .also {
-//                    println(it.joinToString("\n"))
-//                }
+            val yamlInfoList = yamlToLibraryInfo(yamlData)
+            val licenseHtml = StringBuffer()
+
+            // generate HTML
+            yamlInfoList.forEach { libraryInfo ->
+                licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
+                val assetsDir = project.file("src/main/assets")
+                if (!assetsDir.exists()) {
+                    assetsDir.mkdirs()
+                }
+                project.logger.info("render ${assetsDir}/${ext.outputHtml}")
+                project.file("${assetsDir}/${ext.outputHtml}")
+                    .writeText(Templates.wrapWithLayout(licenseHtml))
+            }
+
+
+//            val deps = resolveProjectDependencies(project, setOf(""))
+//            val depsInfoList = depToLibraryInfo(project, deps)
         }
     }
 
-    private fun loadYaml(project: Project): List<LibraryInfoEntity> {
-        val result: MutableList<LibraryInfoEntity> =
+    private fun yamlToLibraryInfo(
+        yamlData: List<Map<String, String>>
+    ): List<LibraryInfo> {
+        return yamlData
+            .map {
+                LibraryInfo(
+                    artifactId = ArtifactId.parse(it["artifact"]),
+                    name = it["name"].toString(),
+                    libraryName = it["name"].toString(),
+                    url = it["url"].toString(),
+                    fileName = it["name"].toString(),
+                    license = it["license"].toString(),
+                    licenseUrl = it["licenseUrl"].toString()
+                )
+            }
+    }
+
+    private fun loadYaml(project: Project): List<LinkedHashMap<String, String>> {
+        val result: MutableList<LinkedHashMap<String, String>> =
             yaml.load(project.file("licenses.yml").readText())
         return result
     }
 
-    private fun depToLibraryInfoEntity(
+    private fun depToLibraryInfo(
         project: Project,
         deps: Set<ResolvedArtifact>
     ): List<LibraryInfo> {
@@ -55,7 +92,7 @@ class LicenseToolsPlugin : Plugin<Project> {
                     project.logger.info("POM: $file")
                 }
 
-                var pStream: File?
+                val pStream: File?
                 try {
                     pStream = pomConfiguration.resolve().first()
                 } catch (e: Exception) {
