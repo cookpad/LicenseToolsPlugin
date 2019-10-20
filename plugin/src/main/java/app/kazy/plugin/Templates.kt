@@ -2,7 +2,6 @@ package app.kazy.plugin
 
 import org.codehaus.groovy.runtime.DefaultGroovyMethods
 import org.codehaus.groovy.runtime.IOGroovyMethods
-import org.codehaus.groovy.runtime.StringGroovyMethods
 
 import java.net.JarURLConnection
 import java.net.URISyntaxException
@@ -10,7 +9,6 @@ import java.net.URL
 import java.util.LinkedHashMap
 import java.util.zip.ZipFile
 
-import groovy.lang.Closure
 import groovy.text.SimpleTemplateEngine
 import java.io.*
 
@@ -29,17 +27,16 @@ object Templates {
         ) + ".html"
         val map = LinkedHashMap<String, LibraryInfo>(1)
         map["library"] = library
-        return templateEngine.createTemplate(readResourceContent(templateFile)).make(map).toString()
+        val templateText = readResourceContent(templateFile)
+        return templateEngine.createTemplate(templateText).make(map).toString()
     }
 
     private fun assertLicenseAndStatement(library: LibraryInfo) {
-        if (library.license.isNullOrBlank()) {
-            println(library)
+        if (library.license.isBlank()) {
             throw NotEnoughInformationException(library)
         }
 
         if (library.getCopyrightStatement() == null) {
-            println(library)
             throw NotEnoughInformationException(library)
         }
 
@@ -65,7 +62,6 @@ object Templates {
     }
 
     private fun readResourceContent(filename: String): String {
-        println("renderResourceContent=========== $filename")
         var templateFileUrl: URL? = Templates::class.java.classLoader.getResource(filename)
             ?: throw FileNotFoundException("File not found: $filename")
 
@@ -85,11 +81,7 @@ object Templates {
                 System.err.println("[plugin] no plugin.jar. run `./gradlew plugin:jar` first.")
                 throw ex
             }
-
-            println("renderResourceContent2===========")
             return IOGroovyMethods.getText(zip.getInputStream(zip.getEntry(filename)), "UTF-8")
-
         }
-
     }
 }

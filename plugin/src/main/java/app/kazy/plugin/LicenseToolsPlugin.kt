@@ -28,7 +28,7 @@ class LicenseToolsPlugin : Plugin<Project> {
 
             // generate HTML
             yamlInfoList
-                .filter { !it.skip }
+                .filterNot { it.skip ?: false }
                 .forEach { libraryInfo ->
                     licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
                     val assetsDir = project.file("src/main/assets")
@@ -46,25 +46,30 @@ class LicenseToolsPlugin : Plugin<Project> {
     }
 
     private fun yamlToLibraryInfo(
-        yamlData: List<Map<String, String>>
+        yamlData: List<Map<String, Any>>
     ): List<LibraryInfo> {
         return yamlData
+            .filterNot {
+                it.getOrDefault("skip", "false").toString().toBoolean()
+            }
             .map {
                 LibraryInfo(
-                    artifactId = ArtifactId.parse(it["artifact"]),
-                    name = it["name"].toString(),
-                    libraryName = it["name"].toString(),
-                    url = it["url"].toString(),
-                    fileName = it["name"].toString(),
-                    license = it["license"].toString(),
-                    licenseUrl = it["licenseUrl"].toString(),
-                    copyrightHolder = it["copyrightHolder"].toString()
+                    artifactId = ArtifactId.parse(it["artifact"] as String?),
+                    name = it["name"] as String,
+                    libraryName = it["name"] as String,
+                    fileName = it["name"] as String,
+                    license = it["license"] as String,
+                    copyrightHolder = it["copyrightHolder"] as String?,
+                    notice = it["notice"] as String?,
+                    url = it.getOrDefault("url", "") as String,
+                    licenseUrl = it["licenseUrl"] as String?,
+                    skip = it.getOrDefault("skip", "false").toString().toBoolean()
                 )
             }
     }
 
-    private fun loadYaml(project: Project): List<LinkedHashMap<String, String>> {
-        val result: MutableList<LinkedHashMap<String, String>> =
+    private fun loadYaml(project: Project): List<LinkedHashMap<String, Any>> {
+        val result: MutableList<LinkedHashMap<String, Any>> =
             yaml.load(project.file("licenses.yml").readText())
         return result
     }
@@ -113,10 +118,12 @@ class LicenseToolsPlugin : Plugin<Project> {
                     url = libraryUrl,
                     fileName = it.file.name,
                     license = licenseName.toString(),
-                    licenseUrl = licenseUrl
+                    licenseUrl = licenseUrl,
+                    copyrightHolder = null,
+                    notice = null,
+                    skip = false
                 )
             }
-
     }
 
     private fun resolveProjectDependencies(
