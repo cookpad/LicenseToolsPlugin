@@ -4,9 +4,6 @@ import org.codehaus.groovy.runtime.DefaultGroovyMethods
 import org.codehaus.groovy.runtime.IOGroovyMethods
 import org.codehaus.groovy.runtime.StringGroovyMethods
 
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.net.JarURLConnection
 import java.net.URISyntaxException
 import java.net.URL
@@ -15,10 +12,11 @@ import java.util.zip.ZipFile
 
 import groovy.lang.Closure
 import groovy.text.SimpleTemplateEngine
+import java.io.*
 
 object Templates {
 
-    val templateEngine = SimpleTemplateEngine()
+    private val templateEngine = SimpleTemplateEngine()
 
     @Throws(IOException::class, URISyntaxException::class, ClassNotFoundException::class)
     fun buildLicenseHtml(library: LibraryInfo): String {
@@ -50,18 +48,24 @@ object Templates {
     fun wrapWithLayout(content: CharSequence): String {
         val templateFile = "template/layout.html"
         val map = LinkedHashMap<String, String>(1)
-        map["content"] = makeIndent(content)
+        map["content"] = makeIndent(content, 4)
         return templateEngine.createTemplate(readResourceContent(templateFile)).make(map).toString()
     }
 
-    private fun makeIndent(content: CharSequence): String {
+    private fun makeIndent(content: CharSequence, level: Int): String {
         val s = StringBuilder()
-        StringGroovyMethods.eachLine(content, object : Closure<StringBuilder>(null, null) {
-        })
+        content.lines().forEach { line ->
+            for (i in 0..level) {
+                s.append(" ")
+            }
+            s.append(line)
+            s.append("\n")
+        }
         return s.toString()
     }
 
     private fun readResourceContent(filename: String): String {
+        println("renderResourceContent=========== $filename")
         var templateFileUrl: URL? = Templates::class.java.classLoader.getResource(filename)
             ?: throw FileNotFoundException("File not found: $filename")
 
@@ -81,7 +85,10 @@ object Templates {
                 System.err.println("[plugin] no plugin.jar. run `./gradlew plugin:jar` first.")
                 throw ex
             }
+
+            println("renderResourceContent2===========")
             return IOGroovyMethods.getText(zip.getInputStream(zip.getEntry(filename)), "UTF-8")
+
         }
 
     }

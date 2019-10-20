@@ -11,6 +11,7 @@ version = '0.1.0'
 
 dependencies {
     compileOnly gradleApi()
+    implementation localGroovy()
     implementation "org.simpleframework:simple-xml:2.7.1"
     implementation "org.yaml:snakeyaml:1.25"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

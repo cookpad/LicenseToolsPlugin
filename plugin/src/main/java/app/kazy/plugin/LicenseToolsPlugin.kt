@@ -40,7 +40,6 @@ class LicenseToolsPlugin : Plugin<Project> {
                         .writeText(Templates.wrapWithLayout(licenseHtml))
                 }
 
-
 //            val deps = resolveProjectDependencies(project, setOf(""))
 //            val depsInfoList = depToLibraryInfo(project, deps)
         }
