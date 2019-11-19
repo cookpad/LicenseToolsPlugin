@@ -14,35 +14,36 @@ open class LicenseToolsPluginExtension {
 }
 
 class LicenseToolsPlugin : Plugin<Project> {
-    val yaml = Yaml()
     override fun apply(project: Project) {
-        // yamlから情報を引き出す
-        // yaml情報からhtmlを生成する
         project.extensions.create("licenses", LicenseToolsPluginExtension::class.java)
         project.task("checkLicenses").doLast {
-            val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
+            val deps = resolveProjectDependencies(project)
+            val depsInfoList = depToLibraryInfo(project, deps)
+            println(depsInfoList.joinToString("\n"))
+        }
 
+        project.task("generateLicensesPage").doLast {
             val yamlData = loadYaml(project)
             val yamlInfoList = yamlToLibraryInfo(yamlData)
-            val licenseHtml = StringBuffer()
-
-            // generate HTML
-            yamlInfoList
-                .filterNot { it.skip ?: false }
-                .forEach { libraryInfo ->
-                    licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
-                    val assetsDir = project.file("src/main/assets")
-                    if (!assetsDir.exists()) {
-                        assetsDir.mkdirs()
-                    }
-                    project.logger.info("render ${assetsDir}/${ext.outputHtml}")
-                    project.file("${assetsDir}/${ext.outputHtml}")
-                        .writeText(Templates.wrapWithLayout(licenseHtml))
-                }
-
-//            val deps = resolveProjectDependencies(project, setOf(""))
-//            val depsInfoList = depToLibraryInfo(project, deps)
+            generateHTML(project, yamlInfoList)
         }
+    }
+
+    private fun generateHTML(project: Project, yamlInfoList: List<LibraryInfo>) {
+        val licenseHtml = StringBuffer()
+        val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
+        yamlInfoList
+            .filterNot { it.skip ?: false }
+            .forEach { libraryInfo ->
+                licenseHtml.append(Templates.buildLicenseHtml(libraryInfo))
+                val assetsDir = project.file("src/main/assets")
+                if (!assetsDir.exists()) {
+                    assetsDir.mkdirs()
+                }
+                project.logger.info("render ${assetsDir}/${ext.outputHtml}")
+                project.file("${assetsDir}/${ext.outputHtml}")
+                    .writeText(Templates.wrapWithLayout(licenseHtml))
+            }
     }
 
     private fun yamlToLibraryInfo(
@@ -69,6 +70,7 @@ class LicenseToolsPlugin : Plugin<Project> {
     }
 
     private fun loadYaml(project: Project): List<LinkedHashMap<String, Any>> {
+        val yaml = Yaml()
         val result: MutableList<LinkedHashMap<String, Any>> =
             yaml.load(project.file("licenses.yml").readText())
         return result
@@ -128,7 +130,7 @@ class LicenseToolsPlugin : Plugin<Project> {
 
     private fun resolveProjectDependencies(
         project: Project,
-        ignoredProjects: Set<String>
+        ignoredProjects: Set<String> = emptySet()
     ): Set<ResolvedArtifact> {
         val subProjects = project.rootProject.subprojects.filter {
             !ignoredProjects.contains(it.name)
@@ -152,7 +154,23 @@ class LicenseToolsPlugin : Plugin<Project> {
                 .flatten()
             runtimeDependencies.addAll(configs)
         }
-        return runtimeDependencies.toSet()
+
+
+        val seen = HashSet<String>()
+        val dependenciesToHandle = HashSet<ResolvedArtifact>()
+
+        runtimeDependencies.forEach { d ->
+            val dependencyDesc =
+                "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
+            if (!seen.contains(dependencyDesc)) {
+                dependenciesToHandle.add(d)
+                val subProject = subProjectMap[dependencyDesc]?.first()
+                if (subProject != null) {
+                    dependenciesToHandle.addAll(resolveProjectDependencies(subProject))
+                }
+            }
+        }
+        return dependenciesToHandle
     }
 }
 
