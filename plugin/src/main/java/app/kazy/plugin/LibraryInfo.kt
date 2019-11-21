@@ -11,7 +11,8 @@ data class LibraryInfo(
     val url: String?,
     val notice: String?,
     val licenseUrl: String?,
-    val skip: Boolean?
+    val skip: Boolean? = null,
+    val forceGenerate: Boolean? = null
 ) {
 
     fun normalizedLicense(): String {

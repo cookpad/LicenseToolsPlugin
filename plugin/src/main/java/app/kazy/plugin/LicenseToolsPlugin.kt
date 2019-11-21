@@ -1,35 +1,90 @@
 package app.kazy.plugin
 
+import groovy.lang.Closure
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.ResolvedArtifact
+import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
+import org.gradle.internal.impldep.org.bouncycastle.asn1.x500.style.RFC4519Style.description
 import org.simpleframework.xml.Serializer
 import org.simpleframework.xml.core.Persister
 import org.yaml.snakeyaml.Yaml
 import java.io.File
-import java.lang.IllegalStateException
 
 open class LicenseToolsPluginExtension {
     var outputHtml: String = "licenses.html"
+
+    var outputJson: String = "licenses.json"
+
+    var licensedYaml: String = "licenses.yml"
+
+    var ignoredGroups = emptySet<String>()
+
+    var ignoredProjects = emptySet<String>()
+}
+
+
+fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryInfo> {
+    return this
+        .filterNot {
+            dependencySet.contains(it.artifactId)
+        }
+        .filterNot {
+            it.skip ?: false
+        }
+        .filterNot {
+            it.forceGenerate ?: false
+        }
+        .toSet()
+}
+
+fun Set<LibraryInfo>.contains(artifactId: ArtifactId): Boolean {
+    this.forEach {
+        if (it.artifactId.matches(artifactId)) {
+            return true
+        }
+    }
+    return false
+
 }
 
 class LicenseToolsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.extensions.create("licenses", LicenseToolsPluginExtension::class.java)
-        project.task("checkLicenses").doLast {
-            val deps = resolveProjectDependencies(project)
-            val depsInfoList = depToLibraryInfo(project, deps)
-            println(depsInfoList.joinToString("\n"))
+        val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
+
+        val checkLicenses = project.task("checkLicenses").doLast {
+            // based on license plugin's dependency-license.xml
+            val resolvedArtifacts = resolveProjectDependencies(project, ext.ignoredProjects)
+            val dependencyLicenses =
+                loadDependencyLicenses(project, resolvedArtifacts, ext.ignoredGroups)
+            // based on libraries.yml
+            val yamlData = loadYaml(project.file(ext.licensedYaml))
+            val librariesYaml = yamlToLibraryInfo(yamlData)
+
+            val notDocumented = dependencyLicenses.notListedIn(librariesYaml)
+            val notInDependencies = librariesYaml.notListedIn(dependencyLicenses)
+            //TODO: impl license not matched
+
+            if (notDocumented.isEmpty() && notInDependencies.isEmpty()) {
+                project.logger.info("checkLicenses: ok")
+                return@doLast
+            }
+            //TODO: output error message
         }
+        checkLicenses.group = "Verification"
+        checkLicenses.description = "Check whether dependency licenses are listed in licenses.yml"
+
 
         project.task("generateLicensesPage").doLast {
-            val yamlData = loadYaml(project)
+            // based on libraries.yml
+            val yamlData = loadYaml(project.file(ext.licensedYaml))
             val yamlInfoList = yamlToLibraryInfo(yamlData)
             generateHTML(project, yamlInfoList)
         }
     }
 
-    private fun generateHTML(project: Project, yamlInfoList: List<LibraryInfo>) {
+    private fun generateHTML(project: Project, yamlInfoList: Set<LibraryInfo>) {
         val licenseHtml = StringBuffer()
         val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
         yamlInfoList
@@ -46,9 +101,10 @@ class LicenseToolsPlugin : Plugin<Project> {
             }
     }
 
-    private fun yamlToLibraryInfo(
+    @VisibleForTesting
+    fun yamlToLibraryInfo(
         yamlData: List<Map<String, Any>>
-    ): List<LibraryInfo> {
+    ): Set<LibraryInfo> {
         return yamlData
             .filterNot {
                 it.getOrDefault("skip", "false").toString().toBoolean()
@@ -64,71 +120,76 @@ class LicenseToolsPlugin : Plugin<Project> {
                     notice = it["notice"] as String?,
                     url = it.getOrDefault("url", "") as String,
                     licenseUrl = it["licenseUrl"] as String?,
-                    skip = it.getOrDefault("skip", "false").toString().toBoolean()
+                    skip = it.getOrDefault("skip", "false").toString().toBoolean(),
+                    forceGenerate = it.getOrDefault("forceGenerate", "false").toString().toBoolean()
                 )
-            }
+            }.toSet()
     }
 
-    private fun loadYaml(project: Project): List<LinkedHashMap<String, Any>> {
+    private fun loadYaml(
+        file: File
+    ): List<LinkedHashMap<String, Any>> {
         val yaml = Yaml()
-        val result: MutableList<LinkedHashMap<String, Any>> =
-            yaml.load(project.file("licenses.yml").readText())
-        return result
+        val result: MutableList<LinkedHashMap<String, Any>> = yaml.load(file.readText())
+        return result.toList()
     }
 
-    private fun depToLibraryInfo(
+    private fun loadDependencyLicenses(
         project: Project,
-        deps: Set<ResolvedArtifact>
-    ): List<LibraryInfo> {
-        return deps
-            .filter {
-                it.moduleVersion.id.version != "undefined"
-            }
-            .filter {
-                true //ignore-list
-            }
-            .map {
-                val dependencyDesc =
-                    "${it.moduleVersion.id.group}:${it.moduleVersion.id.name}:${it.moduleVersion.id.version}"
-
-                val artifactId = ArtifactId.parse(dependencyDesc)
-
-                val pomDependency = project.dependencies.create("$dependencyDesc@pom")
-                val pomConfiguration = project.configurations.detachedConfiguration(pomDependency)
-
-                pomConfiguration.resolve().forEach { file ->
-                    project.logger.info("POM: $file")
-                }
-
-                val pStream: File?
-                try {
-                    pStream = pomConfiguration.resolve().first()
-                } catch (e: Exception) {
-                    project.logger.warn("Unable to retrieve license for $dependencyDesc")
-                    throw IllegalStateException(e)
-                }
-                val persister: Serializer = Persister()
-                val result = persister.read(LibraryPom::class.java, pStream)
-                val licenseName = result.licenses.firstOrNull()?.name
-                val licenseUrl = result.licenses.firstOrNull()?.url
-                val libraryName = result.name
-                val libraryUrl = result.url
-                LibraryInfo(
-                    artifactId = artifactId,
-                    name = it.name,
-                    libraryName = libraryName,
-                    url = libraryUrl,
-                    fileName = it.file.name,
-                    license = licenseName.toString(),
-                    licenseUrl = licenseUrl,
-                    copyrightHolder = null,
-                    notice = null,
-                    skip = false
-                )
-            }
+        resolvedArtifacts: Set<ResolvedArtifact>,
+        ignoredGroups: Set<String>
+    ): Set<LibraryInfo> {
+        return resolvedArtifacts
+            .filterNot { it.moduleVersion.id.version == "unspecified" }
+            .filterNot { ignoredGroups.contains(it.moduleVersion.id.group) }
+            .mapNotNull { resolvedArtifactToLibraryInfo(it, project) }
+            .toSet()
     }
 
-    private fun resolveProjectDependencies(
+    @VisibleForTesting
+    fun resolvedArtifactToLibraryInfo(artifact: ResolvedArtifact, project: Project): LibraryInfo? {
+        val dependencyDesc =
+            "${artifact.moduleVersion.id.group}:${artifact.moduleVersion.id.name}:${artifact.moduleVersion.id.version}"
+        val artifactId: ArtifactId
+        try {
+            artifactId = ArtifactId.parse(dependencyDesc)
+        } catch (e: IllegalArgumentException) {
+            project.logger.info("Unsupport dependency: $dependencyDesc")
+            return null
+        }
+        val pomDependency = project.dependencies.create("$dependencyDesc@pom")
+        val pomConfiguration = project.configurations.detachedConfiguration(pomDependency)
+        pomConfiguration.resolve().forEach { file ->
+            project.logger.info("POM: $file")
+        }
+        val pomStream: File
+        try {
+            pomStream = pomConfiguration.resolve().toList().first()
+        } catch (e: Exception) {
+            project.logger.warn("Unable to retrieve license for $dependencyDesc")
+            return null
+        }
+        val persister: Serializer = Persister()
+        val result = persister.read(LibraryPom::class.java, pomStream)
+        val licenseName = result.licenses.firstOrNull()?.name
+        val licenseUrl = result.licenses.firstOrNull()?.url
+        val libraryName = result.name
+        val libraryUrl = result.url
+        return LibraryInfo(
+            artifactId = artifactId,
+            name = artifact.name,
+            libraryName = libraryName,
+            url = libraryUrl,
+            fileName = artifact.file.name,
+            license = licenseName.toString(),
+            licenseUrl = licenseUrl,
+            copyrightHolder = null,
+            notice = null
+        )
+    }
+
+    @VisibleForTesting
+    fun resolveProjectDependencies(
         project: Project,
         ignoredProjects: Set<String> = emptySet()
     ): Set<ResolvedArtifact> {
