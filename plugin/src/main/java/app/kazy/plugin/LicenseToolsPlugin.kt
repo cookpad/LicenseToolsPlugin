@@ -1,11 +1,10 @@
 package app.kazy.plugin
 
-import groovy.lang.Closure
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
-import org.gradle.internal.impldep.org.bouncycastle.asn1.x500.style.RFC4519Style.description
 import org.simpleframework.xml.Serializer
 import org.simpleframework.xml.core.Persister
 import org.yaml.snakeyaml.Yaml
@@ -22,7 +21,6 @@ open class LicenseToolsPluginExtension {
 
     var ignoredProjects = emptySet<String>()
 }
-
 
 fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryInfo> {
     return this
@@ -188,50 +186,54 @@ class LicenseToolsPlugin : Plugin<Project> {
         )
     }
 
-    @VisibleForTesting
-    fun resolveProjectDependencies(
-        project: Project,
+    fun ResolvedArtifact.toFormattedText(): String {
+        return "${moduleVersion.id.group}:${moduleVersion.id.name}:${moduleVersion.id.version}"
+    }
+
+    fun Project.toFormattedText(): String {
+        return "${group}:${name}:${version}"
+    }
+
+    private fun resolveProjectDependencies(
+        project: Project?,
         ignoredProjects: Set<String> = emptySet()
     ): Set<ResolvedArtifact> {
-        val subProjects = project.rootProject.subprojects.filter {
-            !ignoredProjects.contains(it.name)
-        }
-        val subProjectMap = subProjects.groupBy { "${it.group}:${it.name}:${it.version}" }
+        project ?: return emptySet()
+        val subProjects = targetSubProjects(project, ignoredProjects)
+        val subProjectIndex = subProjects.groupBy { it.toFormattedText() }
+        return subProjects
+            .map { it.configurations }
+            .flatten()
+            .filter { isConfigForDependencies(it.name) }
+            .map { resolvedArtifacts(it) }
+            .flatten()
+            .distinctBy { it.toFormattedText() }
+            .flatMap {
+                val dependencyDesc = it.toFormattedText()
+                val subProject = subProjectIndex[dependencyDesc]?.first()
+                setOf(it, *resolveProjectDependencies(subProject).toTypedArray())
+            }.toSet()
+    }
 
-        val runtimeDependencies: MutableList<ResolvedArtifact> = ArrayList()
+    private fun targetSubProjects(project: Project, ignoredProjects: Set<String>): List<Project> {
+        return project.rootProject.subprojects
+            .filter { !ignoredProjects.contains(it.name) }
+    }
 
-        subProjects.forEach { subProject ->
-            val configs = subProject.configurations
-                .filter {
-                    val regex =
-                        """^(?!releaseUnitTest)(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$""".toRegex()
-                    it.name.matches(regex)
-                }
-                .map {
-                    val copyConfiguration = it.copyRecursive()
-                    copyConfiguration.isCanBeResolved = true
-                    copyConfiguration.resolvedConfiguration.lenientConfiguration.artifacts
-                }
-                .flatten()
-            runtimeDependencies.addAll(configs)
-        }
+    @VisibleForTesting
+    fun isConfigForDependencies(name: String): Boolean {
+        return name.matches(dependencyKeywordPattern)
+    }
 
+    private fun resolvedArtifacts(configuration: Configuration): Set<ResolvedArtifact> {
+        val copyConfiguration = configuration.copyRecursive()
+        copyConfiguration.isCanBeResolved = true
+        return copyConfiguration.resolvedConfiguration.lenientConfiguration.artifacts
+    }
 
-        val seen = HashSet<String>()
-        val dependenciesToHandle = HashSet<ResolvedArtifact>()
-
-        runtimeDependencies.forEach { d ->
-            val dependencyDesc =
-                "$d.moduleVersion.id.group:$d.moduleVersion.id.name:$d.moduleVersion.id.version"
-            if (!seen.contains(dependencyDesc)) {
-                dependenciesToHandle.add(d)
-                val subProject = subProjectMap[dependencyDesc]?.first()
-                if (subProject != null) {
-                    dependenciesToHandle.addAll(resolveProjectDependencies(subProject))
-                }
-            }
-        }
-        return dependenciesToHandle
+    companion object {
+        val dependencyKeywordPattern =
+            """^(?!releaseUnitTest)(?:release\w*)?([cC]ompile|[cC]ompileOnly|[iI]mplementation|[aA]pi)$""".toRegex()
     }
 }
 
