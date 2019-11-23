@@ -12,7 +12,7 @@ import org.gradle.api.Task
 import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
 
 object GenerateLicensesPage {
-    fun create(project: Project): Task {
+    fun register(project: Project): Task {
         return project.task("generateLicensesPage").doLast {
             val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
             // based on libraries.yml

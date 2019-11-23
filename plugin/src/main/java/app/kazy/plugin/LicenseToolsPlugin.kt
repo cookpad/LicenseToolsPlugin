@@ -20,7 +20,7 @@ open class LicenseToolsPluginExtension {
 class LicenseToolsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.extensions.create("licenses", LicenseToolsPluginExtension::class.java)
-        CheckLicenses.create(project)
-        GenerateLicensesPage.create(project)
+        CheckLicenses.register(project)
+        GenerateLicensesPage.register(project)
     }
 }

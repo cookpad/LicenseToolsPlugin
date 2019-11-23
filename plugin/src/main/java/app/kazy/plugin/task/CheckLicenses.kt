@@ -18,7 +18,7 @@ import java.io.File
 
 
 object CheckLicenses {
-    fun create(project: Project): Task {
+    fun register(project: Project): Task {
         return project.task("checkLicenses").doLast {
             val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
             // based on license plugin's dependency-license.xml
