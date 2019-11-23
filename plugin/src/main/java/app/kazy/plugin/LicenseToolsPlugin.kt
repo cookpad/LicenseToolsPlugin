@@ -22,6 +22,7 @@ open class LicenseToolsPluginExtension {
     var ignoredProjects = emptySet<String>()
 }
 
+@VisibleForTesting
 fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryInfo> {
     return this
         .filterNot {
@@ -36,6 +37,7 @@ fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryIn
         .toSet()
 }
 
+@VisibleForTesting
 fun Set<LibraryInfo>.contains(artifactId: ArtifactId): Boolean {
     this.forEach {
         if (it.artifactId.matches(artifactId)) {
@@ -44,6 +46,16 @@ fun Set<LibraryInfo>.contains(artifactId: ArtifactId): Boolean {
     }
     return false
 
+}
+
+@VisibleForTesting
+fun ResolvedArtifact.toFormattedText(): String {
+    return "${moduleVersion.id.group}:${moduleVersion.id.name}:${moduleVersion.id.version}"
+}
+
+@VisibleForTesting
+fun Project.toFormattedText(): String {
+    return "${group}:${name}:${version}"
 }
 
 class LicenseToolsPlugin : Plugin<Project> {
@@ -186,14 +198,6 @@ class LicenseToolsPlugin : Plugin<Project> {
         )
     }
 
-    fun ResolvedArtifact.toFormattedText(): String {
-        return "${moduleVersion.id.group}:${moduleVersion.id.name}:${moduleVersion.id.version}"
-    }
-
-    fun Project.toFormattedText(): String {
-        return "${group}:${name}:${version}"
-    }
-
     private fun resolveProjectDependencies(
         project: Project?,
         ignoredProjects: Set<String> = emptySet()
@@ -215,7 +219,8 @@ class LicenseToolsPlugin : Plugin<Project> {
             }.toSet()
     }
 
-    private fun targetSubProjects(project: Project, ignoredProjects: Set<String>): List<Project> {
+    @VisibleForTesting
+    fun targetSubProjects(project: Project, ignoredProjects: Set<String>): List<Project> {
         return project.rootProject.subprojects
             .filter { !ignoredProjects.contains(it.name) }
     }
