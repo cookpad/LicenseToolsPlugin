@@ -1,5 +1,7 @@
 package app.kazy.plugin
 
+import app.kazy.plugin.data.LibraryInfo
+import app.kazy.plugin.exception.NotEnoughInformationException
 import org.codehaus.groovy.runtime.DefaultGroovyMethods
 import org.codehaus.groovy.runtime.IOGroovyMethods
 

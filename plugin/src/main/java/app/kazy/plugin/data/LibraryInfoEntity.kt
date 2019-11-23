@@ -1,4 +1,4 @@
-package app.kazy.plugin
+package app.kazy.plugin.data
 
 data class LibraryInfoEntity(
     val artifact: String,

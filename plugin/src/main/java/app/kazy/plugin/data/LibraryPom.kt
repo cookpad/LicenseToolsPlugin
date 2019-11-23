@@ -1,4 +1,4 @@
-package app.kazy.plugin
+package app.kazy.plugin.data
 
 import org.simpleframework.xml.*
 

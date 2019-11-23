@@ -1,15 +1,14 @@
 package app.kazy.plugin
 
+import app.kazy.plugin.task.CheckLicenses
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockitokotlin2.mock
-import org.gradle.api.Project
 import org.junit.Test
 
 
-class LicenseToolsPluginTest {
+class CheckLicensesTest {
 
     @Test
-    fun isConfigForDependencies_isCorrect() = LicenseToolsPlugin().run {
+    fun isConfigForDependencies_isCorrect() = CheckLicenses.run {
         assertThat(isConfigForDependencies("api")).isTrue()
         assertThat(isConfigForDependencies("compile")).isTrue()
         assertThat(isConfigForDependencies("compileOnly")).isTrue()
@@ -21,4 +20,5 @@ class LicenseToolsPluginTest {
         assertThat(isConfigForDependencies("debugImplementation")).isFalse()
         assertThat(isConfigForDependencies("testCompileOnly")).isFalse()
     }
+
 }
