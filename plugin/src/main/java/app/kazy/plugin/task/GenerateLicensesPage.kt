@@ -2,9 +2,7 @@ package app.kazy.plugin.task
 
 import app.kazy.plugin.LicenseToolsPluginExtension
 import app.kazy.plugin.Templates
-import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
-import app.kazy.plugin.extension.loadYaml
 import app.kazy.plugin.extension.writeLicenseFile
 import app.kazy.plugin.util.YamlUtils
 import org.gradle.api.Project
@@ -16,7 +14,7 @@ object GenerateLicensesPage {
         return project.task("generateLicensesPage").doLast {
             val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
             // based on libraries.yml
-            val yamlInfoList = YamlUtils.loadToLibraryInfo(project.file(ext.licensedYaml))
+            val yamlInfoList = YamlUtils.loadToLibraryInfo(project.file(ext.licensesYaml))
             project.writeLicenseFile(yamlInfoList.toHtml())
         }
     }

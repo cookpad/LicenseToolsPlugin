@@ -10,7 +10,7 @@ open class LicenseToolsPluginExtension {
 
     var outputJson: String = "licenses.json"
 
-    var licensedYaml: String = "licenses.yml"
+    var licensesYaml: String = "licenses.yml"
 
     var ignoredGroups = emptySet<String>()
 

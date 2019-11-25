@@ -4,10 +4,12 @@ import app.kazy.plugin.LicenseToolsPluginExtension
 import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
 import app.kazy.plugin.data.LibraryPom
+import app.kazy.plugin.extension.licensesUnMatched
 import app.kazy.plugin.extension.notListedIn
 import app.kazy.plugin.extension.resolvedArtifacts
 import app.kazy.plugin.extension.toFormattedText
 import app.kazy.plugin.util.YamlUtils
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.ResolvedArtifact
@@ -26,21 +28,62 @@ object CheckLicenses {
             val dependencyLicenses =
                 loadDependencyLicenses(project, resolvedArtifacts, ext.ignoredGroups)
             // based on libraries.yml
-            val librariesYaml = YamlUtils.loadToLibraryInfo(project.file(ext.licensedYaml))
+            val librariesYaml = YamlUtils.loadToLibraryInfo(project.file(ext.licensesYaml))
 
             val notDocumented = dependencyLicenses.notListedIn(librariesYaml)
             val notInDependencies = librariesYaml.notListedIn(dependencyLicenses)
-            //TODO: impl license not matched
+            val licensesUnMatched = dependencyLicenses.licensesUnMatched(librariesYaml)
 
-            if (notDocumented.isEmpty() && notInDependencies.isEmpty()) {
+            if (
+                notDocumented.isEmpty()
+                && notInDependencies.isEmpty()
+                && licensesUnMatched.isEmpty()
+            ) {
                 project.logger.info("checkLicenses: ok")
                 return@doLast
             }
-            //TODO: output error message
+
+            if (notDocumented.isNotEmpty()) {
+                project.logger.warn("# Libraries not listed in ${ext.licensesYaml}:")
+                notDocumented.forEach { libraryInfo ->
+                    val text = generateLibraryInfoText(libraryInfo)
+                    project.logger.warn(text)
+                }
+            }
+
+            if (notInDependencies.isNotEmpty()) {
+                project.logger.warn("# Libraries listed in ${ext.licensesYaml} but not in dependencies:")
+                notInDependencies.forEach { libraryInfo ->
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n")
+                }
+            }
+            if (licensesUnMatched.isNotEmpty()) {
+                project.logger.warn("# Licenses not matched with pom.xml in dependencies:")
+                licensesUnMatched.forEach { libraryInfo ->
+                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
+                }
+            }
+            throw GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")
         }.also {
             it.group = "Verification"
             it.description = "Check whether dependency licenses are listed in licenses.yml"
         }
+    }
+
+    @VisibleForTesting
+    fun generateLibraryInfoText(libraryInfo: LibraryInfo): String {
+        val text = StringBuffer()
+        text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
+        text.append("  name: ${libraryInfo.name}\n")
+        text.append("  copyrightHolder: ${libraryInfo.copyrightHolder}\n")
+        text.append("  license: ${libraryInfo.license}\n")
+        if (libraryInfo.licenseUrl?.isNotBlank() == true) {
+            text.append("  licenseUrl: ${libraryInfo.licenseUrl}\n")
+        }
+        if (libraryInfo.url?.isNotBlank() == true) {
+            text.append("  url: ${libraryInfo.url}\n")
+        }
+        return text.toString().trim()
     }
 
     @VisibleForTesting
