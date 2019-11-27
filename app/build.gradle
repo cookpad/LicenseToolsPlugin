@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 //apply plugin: 'app.kazy.license-tools-plugin'
+//apply plugin: 'com.cookpad.android.licensetools'
+
 
 android {
     compileSdkVersion 29

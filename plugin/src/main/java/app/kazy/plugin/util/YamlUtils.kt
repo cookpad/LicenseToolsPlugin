@@ -17,7 +17,7 @@ object YamlUtils {
                     name = it["name"] as String,
                     libraryName = it["name"] as String,
                     fileName = it["name"] as String,
-                    license = it["license"] as String,
+                    license = it["license"] as String? ?: "",
                     copyrightHolder = it["copyrightHolder"] as String?,
                     notice = it["notice"] as String?,
                     url = it.getOrDefault("url", "") as String,
