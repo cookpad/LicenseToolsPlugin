@@ -1,6 +1,28 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.1'
+}
+
+pluginBundle {
+    website = 'https://github.com/kazy1991/LicenseToolsPlugin'
+    vcsUrl = 'https://github.com/kazy1991/LicenseToolsPlugin.git'
+    tags = ['android', 'license']
+}
+
+archivesBaseName = 'license-tools-plugin'
+group = 'app.kazy'
+version = '0.0.1'
+
+gradlePlugin {
+    plugins {
+        licenseToolsPlugin {
+            id = 'app.kazy.plugin'
+            displayName = 'LicenseToolsPlugin'
+            description = 'Gradle plugin to check library licenses and generate license pages.'
+            implementationClass = 'app.kazy.plugin.LicenseToolsPlugin'
+        }
+    }
 }
 
 apply plugin: 'maven'
