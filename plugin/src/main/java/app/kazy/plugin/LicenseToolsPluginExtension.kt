@@ -10,4 +10,8 @@ open class LicenseToolsPluginExtension {
     var ignoredGroups = emptySet<String>()
 
     var ignoredProjects = emptySet<String>()
+
+    companion object {
+        val NAME = "licenseTools"
+    }
 }
