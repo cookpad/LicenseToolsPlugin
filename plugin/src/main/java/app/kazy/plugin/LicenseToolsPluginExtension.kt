@@ -12,6 +12,6 @@ open class LicenseToolsPluginExtension {
     var ignoredProjects = emptySet<String>()
 
     companion object {
-        val NAME = "licenseTools"
+        const val NAME = "licenseTools"
     }
 }
