@@ -13,5 +13,5 @@ fun Project.writeLicenseFile(html: String) {
     val assetsDir = file("src/main/assets")
     assetsDir.mkdirs()
     logger.info("render ${assetsDir}/${ext.outputHtml}")
-    file("${assetsDir}/${ext.outputHtml}").writeText(Templates.wrapWithLayout(html))
+    file("${assetsDir}/${ext.outputHtml}").writeText(html)
 }
