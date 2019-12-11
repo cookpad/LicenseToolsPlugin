@@ -7,16 +7,16 @@ import java.io.File
 
 object YamlUtils {
     fun loadToLibraryInfo(file: File): Set<LibraryInfo> {
+        if (!file.exists()) {
+            return emptySet()
+        }
         return file.loadYaml()
-            .filterNot {
-                it.getOrDefault("skip", "false").toString().toBoolean()
-            }
             .map {
                 LibraryInfo(
                     artifactId = ArtifactId.parse(it["artifact"] as String?),
-                    name = it["name"] as String,
-                    libraryName = it["name"] as String,
-                    fileName = it["name"] as String,
+                    name = it["name"] as String? ?: "",
+                    libraryName = it["name"] as String? ?: "",
+                    fileName = it["name"] as String? ?: "",
                     license = it["license"] as String? ?: "",
                     copyrightHolder = it["copyrightHolder"] as String?,
                     notice = it["notice"] as String?,
