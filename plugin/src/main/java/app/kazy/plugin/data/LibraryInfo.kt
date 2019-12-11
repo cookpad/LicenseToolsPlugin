@@ -68,7 +68,7 @@ data class LibraryInfo(
     fun getCopyrightStatement(): String? {
         return when {
             notice?.isNotBlank() ?: false -> notice
-            copyrightHolder.isNullOrEmpty() -> null
+            copyrightHolder.isNullOrEmpty() -> "" // This is backward compatibility
             else -> buildCopyrightStatement(copyrightHolder)
         }
     }
