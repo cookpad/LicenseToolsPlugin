@@ -10,10 +10,6 @@ pluginBundle {
     tags = ['android', 'license']
 }
 
-archivesBaseName = 'license-tools-plugin'
-group = 'app.kazy'
-version = '0.0.1'
-
 gradlePlugin {
     plugins {
         licenseToolsPlugin {
@@ -29,7 +25,7 @@ apply plugin: 'maven'
 
 archivesBaseName = 'license-tools-plugin'
 group = 'app.kazy'
-version = '0.0.1'
+version = '0.0.2'
 
 dependencies {
     compileOnly gradleApi()
