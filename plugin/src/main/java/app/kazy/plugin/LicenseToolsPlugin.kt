@@ -1,7 +1,7 @@
 package app.kazy.plugin
 
 import app.kazy.plugin.task.CheckLicenses
-import app.kazy.plugin.task.GenerateLicensesPage
+import app.kazy.plugin.task.GenerateLicensePage
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -12,6 +12,6 @@ class LicenseToolsPlugin : Plugin<Project> {
             LicenseToolsPluginExtension::class.java
         )
         CheckLicenses.register(project)
-        GenerateLicensesPage.register(project)
+        GenerateLicensePage.register(project)
     }
 }

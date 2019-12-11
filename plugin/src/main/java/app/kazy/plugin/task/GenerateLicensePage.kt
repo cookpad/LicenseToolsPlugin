@@ -9,9 +9,9 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
 
-object GenerateLicensesPage {
+object GenerateLicensePage {
     fun register(project: Project): Task {
-        return project.task("generateLicensesPage").doLast {
+        return project.task("generateLicensePage").doLast {
             val ext = project.extensions.getByType(LicenseToolsPluginExtension::class.java)
             // based on libraries.yml
             val yamlInfoList = YamlUtils.loadToLibraryInfo(project.file(ext.licensesYaml))
