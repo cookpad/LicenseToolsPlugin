@@ -25,7 +25,7 @@ apply plugin: 'maven'
 
 archivesBaseName = 'license-tools-plugin'
 group = 'app.kazy'
-version = '0.0.5'
+version = '0.0.6'
 
 dependencies {
     compileOnly gradleApi()
