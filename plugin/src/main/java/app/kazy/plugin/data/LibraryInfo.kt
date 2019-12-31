@@ -7,7 +7,10 @@ data class LibraryInfo(
     val fileName: String = "",
     val license: String = "",
     val year: String = "",
-    val copyrightHolder: String?,
+    val copyrightHolder: String? = null,
+    val copyrightHolders: List<String>? = null,
+    val author: String? = null,
+    val authors: List<String>? = null,
     val url: String?,
     val notice: String?,
     val licenseUrl: String?,
@@ -68,12 +71,12 @@ data class LibraryInfo(
     fun getCopyrightStatement(): String? {
         return when {
             notice?.isNotBlank() ?: false -> notice
-            copyrightHolder.isNullOrEmpty() -> "" // This is backward compatibility
+            copyrightHolder.isNullOrEmpty() -> null
             else -> buildCopyrightStatement(copyrightHolder)
         }
     }
 
-    private fun buildCopyrightStatement(copyrightHolder: String): String? {
+    private fun buildCopyrightStatement(copyrightHolder: String): String {
         val dot = if (copyrightHolder.endsWith(".")) "" else "."
         return if (year.isNotEmpty()) {
             "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
