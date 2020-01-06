@@ -13,7 +13,7 @@ pluginBundle {
 gradlePlugin {
     plugins {
         licenseToolsPlugin {
-            id = 'app.kazy.plugin'
+            id = 'app.kazy.plugin.license-tools'
             displayName = 'LicenseToolsPlugin'
             description = 'Gradle plugin to check library licenses and generate license pages.'
             implementationClass = 'app.kazy.plugin.LicenseToolsPlugin'
@@ -23,8 +23,8 @@ gradlePlugin {
 
 apply plugin: 'maven'
 
-archivesBaseName = 'license-tools-plugin'
-group = 'app.kazy'
+archivesBaseName = 'license-tools'
+group = 'app.kazy.plugin'
 version = '0.0.6'
 
 dependencies {
