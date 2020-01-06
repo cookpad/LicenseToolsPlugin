@@ -6,9 +6,9 @@ import app.kazy.plugin.extension.loadYaml
 import java.io.File
 
 object YamlUtils {
-    fun loadToLibraryInfo(file: File): Set<LibraryInfo> {
+    fun loadToLibraryInfo(file: File): List<LibraryInfo> {
         if (!file.exists()) {
-            return emptySet()
+            return emptyList()
         }
         return file.loadYaml()
             .map {
@@ -28,7 +28,7 @@ object YamlUtils {
                         "false"
                     ).toString().toBoolean()
                 )
-            }.toSet()
+            }
     }
 
     private fun makeCopyRightHolder(map: Map<String, Any>): String? {

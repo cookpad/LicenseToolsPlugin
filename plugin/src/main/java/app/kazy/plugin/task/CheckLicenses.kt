@@ -15,7 +15,6 @@ import org.simpleframework.xml.Serializer
 import org.simpleframework.xml.core.Persister
 import java.io.File
 
-
 object CheckLicenses {
     fun register(project: Project): Task {
         return project.task("checkLicenses").doLast {
@@ -96,12 +95,11 @@ object CheckLicenses {
         project: Project,
         resolvedArtifacts: Set<ResolvedArtifact>,
         ignoredGroups: Set<String>
-    ): Set<LibraryInfo> {
+    ): List<LibraryInfo> {
         return resolvedArtifacts
             .filterNot { it.moduleVersion.id.version == "unspecified" }
             .filterNot { ignoredGroups.contains(it.moduleVersion.id.group) }
             .mapNotNull { resolvedArtifactToLibraryInfo(it, project) }
-            .toSet()
     }
 
     @VisibleForTesting

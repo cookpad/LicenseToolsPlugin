@@ -1,0 +1,140 @@
+- artifact: com.android.support:+:+
+  name: Android Support Libraries
+  copyrightHolder: The Android Open Source Project
+  license: apache2
+- artifact: io.reactivex:rxjava:+
+  name: RxJava
+  copyrightHolder: Netflix, Inc.
+  license: apache2
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: "https://github.com/ReactiveX/RxJava"
+- artifact: com.tunnelvisionlabs:antlr4-runtime:4.5
+  name: ANTLR4
+  authors:
+    - Terence Parr
+    - Sam Harwell
+  license: bsd_3_clauses
+- artifact: com.github.gfx.android.orma:+:+
+  name: Android Orma
+  notice: |
+    Copyright (c) 2015 FUJI Goro (gfx)
+    SQLite.g4 is: Copyright (c) 2014 by Bart Kiers
+  license: apache_2
+- artifact: com.github.bumptech.glide:glide:+
+  name: Glide
+  copyrightHolder: Google Inc.
+  license: bsd_2_clauses
+  url: "https://github.com/bumptech/glide"
+- artifact: com.google.code.gson:gson:+
+  name: Gson
+  copyrightHolder: Google Inc.
+  license: apache2
+- artifact: io.reactivex:rxandroid:1.1.0
+  name: RxAndroid
+  copyrightHolder: The RxAndroid authors
+  license: apache2
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: "https://github.com/ReactiveX/RxAndroid"
+- artifact: com.google.android.gms:+:+
+  skip: true
+- artifact: com.android.databinding:+:+
+  skip: true
+- artifact: com.squareup.picasso:picasso:+
+  name: Picasso
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: org.reactivestreams:reactive-streams:+
+  name: reactive-streams
+  copyrightHolder: N/A
+  license: CC0
+  licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/
+  url: http://www.reactive-streams.org/
+- artifact: org.apache.commons:commons-lang3:+
+  name: Apache Commons Lang
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: #LICENSE#
+  url: http://commons.apache.org/proper/commons-lang/
+  skip: true
+- artifact: org.yaml:snakeyaml:+
+  name: SnakeYAML
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://www.snakeyaml.org
+  skip: true
+- name: OpenCV
+  copyrightHolder: OpenCV team
+  license: bsd_3_clauses
+  url: "https://opencv.org/"
+  forceGenerate: true
+- artifact: com.squareup.okio:okio:+
+  name: Okio
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.retrofit2:retrofit:+
+  name: Retrofit
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.okhttp3:okhttp:+
+  name: OkHttp
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.squareup.retrofit2:converter-gson:+
+  name: "Converter: Gson"
+  copyrightHolder: Square, Inc.
+  license: apache2
+- artifact: com.twitter:twitter-text:+
+  name: twitter-text
+  copyrightHolder: Twitter, Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/twitter/twitter-text
+- artifact: com.twitter.sdk.android:+:+
+  name: Tweet Ui Android SDK
+  copyrightHolder: Twitter, Inc.
+  license: bsd_3_clauses
+  licenseUrl: https://dev.twitter.com/overview/terms/twitterkit.html
+  forceGenerate: true
+# Libraries not listed in licenses.yml:
+- artifact: org.jetbrains.kotlin:kotlin-stdlib:+
+  name: org.jetbrains.kotlin:kotlin-stdlib
+  copyrightHolder: JetBrains
+  license: The Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://kotlinlang.org/
+- artifact: org.jetbrains:annotations:+
+  name: IntelliJ IDEA Annotations
+  copyrightHolder: JetBrains
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://www.jetbrains.org
+- artifact: org.jetbrains.kotlin:kotlin-android-extensions-runtime:+
+  name: org.jetbrains.kotlin:kotlin-android-extensions-runtime
+  copyrightHolder: JetBrains
+  license: The Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://kotlinlang.org/
+- artifact: com.mopub.volley:mopub-volley:+
+  name: MoPub Volley
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/mopub/mopub-volley
+- artifact: com.mopub:libAvid-mopub:+
+  name: AVID SDK (MoPub Android namespace)
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: MoPub SDK License
+  licenseUrl: http://www.mopub.com/legal/sdk-license-agreement/
+  url: https://github.com/mopub/mopub-android-sdk
+- artifact: com.mopub:mopub-sdk-base:+
+  name: mopub-sdk-base
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: MoPub SDK License
+  licenseUrl: http://www.mopub.com/legal/sdk-license-agreement/
+  url: https://github.com/mopub/mopub-android-sdk
+- artifact: com.moat.analytics.mobile.mpub:moat-mobile-app-kit:+
+  name: moat-mobile-app-kit
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: #LICENSE#
+  licenseUrl: https://s3.amazonaws.com/moat-sdk-builds/license/LICENSE.txt
+  skip: true

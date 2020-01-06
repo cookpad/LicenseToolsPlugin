@@ -20,7 +20,7 @@ object GenerateLicensePage {
     }
 
     @VisibleForTesting
-    fun Set<LibraryInfo>.toHtml(): String {
+    fun List<LibraryInfo>.toHtml(): String {
         val licenseHtml = StringBuffer()
         this.filterNot { it.skip ?: false }
             .forEach { licenseHtml.append(Templates.buildLicenseHtml(it)) }
