@@ -75,12 +75,12 @@ object CheckLicenses {
         val text = StringBuffer()
         text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
         text.append("  name: ${libraryInfo.name}\n")
-        text.append("  copyrightHolder: ${libraryInfo.copyrightHolder}\n")
+        text.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
         text.append("  license: ${libraryInfo.license}\n")
         if (libraryInfo.licenseUrl?.isNotBlank() == true) {
             text.append("  licenseUrl: ${libraryInfo.licenseUrl}\n")
         }
-        if (libraryInfo.url?.isNotBlank() == true) {
+        if (libraryInfo.url.isNotBlank()) {
             text.append("  url: ${libraryInfo.url}\n")
         }
         return text.toString().trim()
@@ -145,10 +145,8 @@ object CheckLicenses {
             libraryName = libraryName,
             url = libraryUrl,
             fileName = artifact.file.name,
-            license = licenseName.toString(),
-            licenseUrl = licenseUrl,
-            copyrightHolder = null,
-            notice = null
+            license = licenseName,
+            licenseUrl = licenseUrl
         )
     }
 

@@ -34,7 +34,7 @@ object Templates {
     }
 
     private fun assertLicenseAndStatement(library: LibraryInfo) {
-        if (library.license.isBlank()) {
+        if (library.license.isNullOrBlank()) {
             throw NotEnoughInformationException(library)
         }
 

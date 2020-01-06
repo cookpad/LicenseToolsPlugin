@@ -4,15 +4,15 @@ data class LibraryInfo(
     val artifactId: ArtifactId,
     val name: String,
     val libraryName: String,
-    val fileName: String = "",
-    val license: String = "",
-    val year: String = "",
+    val fileName: String,
+    val url: String,
+    val license: String? = null,
+    val year: String? = null,
     val copyrightHolder: String? = null,
     val copyrightHolders: List<String>? = null,
     val author: String? = null,
     val authors: List<String>? = null,
-    val url: String?,
-    val notice: String?,
+    val notice: String? = null,
     val licenseUrl: String?,
     val skip: Boolean? = null,
     val forceGenerate: Boolean? = null
@@ -20,6 +20,7 @@ data class LibraryInfo(
 
     fun normalizedLicense(): String {
         return when {
+            license.isNullOrEmpty() -> ""
             apache1_0.matches(license) -> "apache1_0"
             apache1_1.matches(license) -> "apache1_1"
             apache2.matches(license) -> "apache2"
@@ -78,10 +79,10 @@ data class LibraryInfo(
 
     private fun buildCopyrightStatement(copyrightHolder: String): String {
         val dot = if (copyrightHolder.endsWith(".")) "" else "."
-        return if (year.isNotEmpty()) {
-            "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
-        } else {
+        return if (year.isNullOrEmpty()) {
             "Copyright &copy; ${copyrightHolder}${dot} All rights reserved."
+        } else {
+            "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
         }
     }
 

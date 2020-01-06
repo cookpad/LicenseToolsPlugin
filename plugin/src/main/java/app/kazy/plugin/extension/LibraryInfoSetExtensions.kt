@@ -20,7 +20,7 @@ fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryIn
 fun Set<LibraryInfo>.licensesUnMatched(librariesYaml: Set<LibraryInfo>): Set<LibraryInfo> {
     return librariesYaml
         .filter { it.skip ?: false || it.forceGenerate ?: false }
-        .filter { it.license.isNotBlank() }
+        .filter { it.license?.isNotBlank() ?: true }
         .filter { this.checkUnMatchedLicense(it) }
         .toSet()
 }
@@ -28,7 +28,7 @@ fun Set<LibraryInfo>.licensesUnMatched(librariesYaml: Set<LibraryInfo>): Set<Lib
 fun Set<LibraryInfo>.checkUnMatchedLicense(libraryInfo: LibraryInfo): Boolean {
     return this.findAll(libraryInfo.artifactId)
         .filter { it.skip ?: false || it.forceGenerate ?: false }
-        .filter { it.license.isNotBlank() }
+        .filter { it.license?.isNotBlank() ?: true }
         .filterNot {
             it.normalizedLicense().equals(libraryInfo.normalizedLicense(), ignoreCase = true)
         }
