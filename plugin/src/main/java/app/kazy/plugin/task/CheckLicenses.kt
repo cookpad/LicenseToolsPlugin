@@ -4,10 +4,7 @@ import app.kazy.plugin.LicenseToolsPluginExtension
 import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
 import app.kazy.plugin.data.LibraryPom
-import app.kazy.plugin.extension.licensesUnMatched
-import app.kazy.plugin.extension.notListedIn
-import app.kazy.plugin.extension.resolvedArtifacts
-import app.kazy.plugin.extension.toFormattedText
+import app.kazy.plugin.extension.*
 import app.kazy.plugin.util.YamlUtils
 import org.gradle.api.GradleException
 import org.gradle.api.Project
@@ -33,11 +30,13 @@ object CheckLicenses {
             val notDocumented = dependencyLicenses.notListedIn(librariesYaml)
             val notInDependencies = librariesYaml.notListedIn(dependencyLicenses)
             val licensesUnMatched = dependencyLicenses.licensesUnMatched(librariesYaml)
+            val duplicatedArtifactIds = librariesYaml.duplicatedArtifacts()
 
             if (
                 notDocumented.isEmpty()
                 && notInDependencies.isEmpty()
                 && licensesUnMatched.isEmpty()
+                && duplicatedArtifactIds.isEmpty()
             ) {
                 project.logger.info("checkLicenses: ok")
                 return@doLast
@@ -61,6 +60,12 @@ object CheckLicenses {
                 project.logger.warn("# Licenses not matched with pom.xml in dependencies:")
                 licensesUnMatched.forEach { libraryInfo ->
                     project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
+                }
+            }
+            if (duplicatedArtifactIds.isNotEmpty()) {
+                project.logger.warn("# Libraries is duplicated listed in ${ext.licensesYaml}:")
+                duplicatedArtifactIds.forEach { artifactId ->
+                    project.logger.warn("- artifact: $artifactId\n")
                 }
             }
             throw GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")

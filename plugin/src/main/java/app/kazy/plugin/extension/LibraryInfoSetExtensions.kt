@@ -3,6 +3,16 @@ package app.kazy.plugin.extension
 import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
 
+
+fun Set<LibraryInfo>.duplicatedArtifacts(): Set<String> {
+    return this
+        .groupingBy { it.artifactId.withWildcardVersion() }
+        .eachCount()
+        .filter { it.value > 0 }
+        .map { it.key }
+        .toSet()
+}
+
 fun Set<LibraryInfo>.notListedIn(dependencySet: Set<LibraryInfo>): Set<LibraryInfo> {
     return this
         .filterNot {
