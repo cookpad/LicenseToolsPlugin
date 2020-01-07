@@ -32,11 +32,7 @@ data class ArtifactId(
             }
             val parts = notation.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (parts.size == 3) {
-                return ArtifactId(
-                    parts[0],
-                    parts[1],
-                    parts[2]
-                )
+                return ArtifactId(parts[0], parts[1], parts[2])
             }
             throw IllegalArgumentException("Invalid arguments: $notation")
         }
