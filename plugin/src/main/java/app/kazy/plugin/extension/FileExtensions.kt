@@ -1,7 +1,7 @@
 package app.kazy.plugin.extension
 
-import org.yaml.snakeyaml.Yaml
 import java.io.File
+import org.yaml.snakeyaml.Yaml
 
 fun File.loadYaml(): List<LinkedHashMap<String, Any>> {
     val yaml = Yaml()

@@ -3,7 +3,6 @@ package app.kazy.plugin.task
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-
 class CheckLicensesTest {
 
     @Test
@@ -19,5 +18,4 @@ class CheckLicensesTest {
         assertThat(isConfigForDependencies("debugImplementation")).isFalse()
         assertThat(isConfigForDependencies("testCompileOnly")).isFalse()
     }
-
 }

@@ -3,13 +3,13 @@ package app.kazy.plugin.data
 data class ArtifactId(
     val group: String,
     val name: String, // "+" as a wild card
-    val version: String  // "+" as a wild card
+    val version: String // "+" as a wild card
 ) {
 
     fun matches(artifactId: ArtifactId): Boolean {
-        return (matchesWithWildcard(group, artifactId.group)
-                && matchesWithWildcard(name, artifactId.name)
-                && matchesWithWildcard(version, artifactId.version))
+        return (matchesWithWildcard(group, artifactId.group) &&
+                matchesWithWildcard(name, artifactId.name) &&
+                matchesWithWildcard(version, artifactId.version))
     }
 
     private fun matchesWithWildcard(a: String, b: String): Boolean {
@@ -42,4 +42,3 @@ data class ArtifactId(
         }
     }
 }
-

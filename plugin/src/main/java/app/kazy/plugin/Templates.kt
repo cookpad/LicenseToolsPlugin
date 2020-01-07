@@ -2,17 +2,17 @@ package app.kazy.plugin
 
 import app.kazy.plugin.data.LibraryInfo
 import app.kazy.plugin.exception.NotEnoughInformationException
-import org.codehaus.groovy.runtime.DefaultGroovyMethods
-import org.codehaus.groovy.runtime.IOGroovyMethods
-
+import groovy.text.SimpleTemplateEngine
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.net.JarURLConnection
 import java.net.URISyntaxException
 import java.net.URL
 import java.util.LinkedHashMap
 import java.util.zip.ZipFile
-
-import groovy.text.SimpleTemplateEngine
-import java.io.*
+import org.codehaus.groovy.runtime.DefaultGroovyMethods
+import org.codehaus.groovy.runtime.IOGroovyMethods
 
 object Templates {
 
@@ -41,7 +41,6 @@ object Templates {
         if (library.getCopyrightStatement() == null) {
             throw NotEnoughInformationException(library)
         }
-
     }
 
     fun wrapWithLayout(content: CharSequence): String {

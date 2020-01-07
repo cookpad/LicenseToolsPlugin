@@ -27,8 +27,8 @@ data class LibraryInfo(
             mit.matches(license) -> "mit"
             bsd_2_clauses_a.matches(license)
                     || bsd_2_clauses_b.matches(license) -> "bsd_2_clauses"
-            bsd_3_clauses_a.matches(license)
-                    || bsd_3_clauses_b.matches(license)
+            bsd_3_clauses_a.matches(license) ||
+                    bsd_3_clauses_b.matches(license)
                     || bsd_3_clauses_c.matches(license) -> "bsd_3_clauses"
             bsd_4_clauses_a.matches(license)
                     || bsd_4_clauses_b.matches(license) -> "bsd_4_clauses"
@@ -51,17 +51,17 @@ data class LibraryInfo(
                     || cddl_b.matches(license) -> "cddl1"
             lgpl2_1_a.matches(license)
                     || lgpl2_1_b.matches(license) -> "lgpl2_1"
-            lgpl3_a.matches(license)
-                    || lgpl3_b.matches(license)
-                    || lgpl3_c.matches(license)
+            lgpl3_a.matches(license) ||
+                    lgpl3_b.matches(license) ||
+                    lgpl3_c.matches(license)
                     || lgpl3_d.matches(license) -> "lgpl3"
             gpl1_a.matches(license)
                     || gpl1_b.matches(license) -> "gpl1"
             gpl2_a.matches(license)
                     || gpl2_b.matches(license) -> "gpl2"
-            gpl3_a.matches(license)
-                    || gpl3_b.matches(license)
-                    || gpl3_c.matches(license)
+            gpl3_a.matches(license) ||
+                    gpl3_b.matches(license) ||
+                    gpl3_c.matches(license)
                     || gpl3_d.matches(license) -> "gpl3"
             mopub_sdk_license_a.matches(license)
                     || mopub_sdk_license_b.matches(license) -> "mopub_sdk_license"
@@ -81,9 +81,9 @@ data class LibraryInfo(
     private fun buildCopyrightStatement(copyrightHolder: String): String {
         val dot = if (copyrightHolder.endsWith(".")) "" else "."
         return if (year.isNullOrEmpty()) {
-            "Copyright &copy; ${copyrightHolder}${dot} All rights reserved."
+            "Copyright &copy; ${copyrightHolder}$dot All rights reserved."
         } else {
-            "Copyright &copy; ${year}, ${copyrightHolder}${dot} All rights reserved."
+            "Copyright &copy; $year, ${copyrightHolder}$dot All rights reserved."
         }
     }
 
@@ -133,7 +133,6 @@ data class LibraryInfo(
         val gpl3_d = """(?i).*\bgpl\b.*""".toRegex()
         val mopub_sdk_license_a = """(?i).*\bmopub\b.*""".toRegex()
         val mopub_sdk_license_b = """(?i).*\bmopub\b.*\bsdk\b.*\blicense\b.*""".toRegex()
-        val firebase_license =  """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
+        val firebase_license = """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
     }
-
 }

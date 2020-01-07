@@ -4,8 +4,13 @@ import app.kazy.plugin.LicenseToolsPluginExtension
 import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
 import app.kazy.plugin.data.LibraryPom
-import app.kazy.plugin.extension.*
+import app.kazy.plugin.extension.duplicatedArtifacts
+import app.kazy.plugin.extension.licensesUnMatched
+import app.kazy.plugin.extension.notListedIn
+import app.kazy.plugin.extension.resolvedArtifacts
+import app.kazy.plugin.extension.toFormattedText
 import app.kazy.plugin.util.YamlUtils
+import java.io.File
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -13,7 +18,6 @@ import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
 import org.simpleframework.xml.Serializer
 import org.simpleframework.xml.core.Persister
-import java.io.File
 
 object CheckLicenses {
     fun register(project: Project): Task {
@@ -32,10 +36,10 @@ object CheckLicenses {
             val duplicatedArtifactIds = librariesYaml.duplicatedArtifacts()
 
             if (
-                notDocumented.isEmpty()
-                && notInDependencies.isEmpty()
-                && licensesUnMatched.isEmpty()
-                && duplicatedArtifactIds.isEmpty()
+                notDocumented.isEmpty() &&
+                notInDependencies.isEmpty() &&
+                licensesUnMatched.isEmpty() &&
+                duplicatedArtifactIds.isEmpty()
             ) {
                 project.logger.info("checkLicenses: ok")
                 return@doLast

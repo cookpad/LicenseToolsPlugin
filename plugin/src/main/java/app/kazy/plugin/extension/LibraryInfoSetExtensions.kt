@@ -3,7 +3,6 @@ package app.kazy.plugin.extension
 import app.kazy.plugin.data.ArtifactId
 import app.kazy.plugin.data.LibraryInfo
 
-
 fun List<LibraryInfo>.duplicatedArtifacts(): List<String> {
     return this
         .groupingBy { it.artifactId.withWildcardVersion() }
@@ -41,7 +40,6 @@ fun List<LibraryInfo>.checkUnMatchedLicense(libraryInfo: LibraryInfo): Boolean {
         }
         .isNotEmpty()
 }
-
 
 fun List<LibraryInfo>.findAll(artifactId: ArtifactId): List<LibraryInfo> {
     return this

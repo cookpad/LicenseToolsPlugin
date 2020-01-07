@@ -1,6 +1,10 @@
 package app.kazy.plugin.data
 
-import org.simpleframework.xml.*
+import org.simpleframework.xml.Attribute
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Namespace
+import org.simpleframework.xml.Root
 
 @Root(name = "project", strict = false)
 class LibraryPom {
@@ -33,5 +37,3 @@ class LibraryPom {
         var url: String? = ""
     }
 }
-
-

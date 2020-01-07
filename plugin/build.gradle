@@ -1,8 +1,10 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
+    id "org.jlleitschuh.gradle.ktlint" version "9.1.1"
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.10.1'
 }
+apply plugin: "org.jlleitschuh.gradle.ktlint"
 
 pluginBundle {
     website = 'https://github.com/kazy1991/LicenseToolsPlugin'
