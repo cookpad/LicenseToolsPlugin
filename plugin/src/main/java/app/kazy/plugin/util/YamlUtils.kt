@@ -14,13 +14,12 @@ object YamlUtils {
             .map {
                 LibraryInfo(
                     artifactId = ArtifactId.parse(it["artifact"] as String?),
-                    name = it["name"] as String? ?: "",
-                    libraryName = it["name"] as String? ?: "",
-                    fileName = it["name"] as String? ?: "",
-                    license = it["license"] as String? ?: "",
+                    name = it["name"] as String?,
+                    libraryName = it["name"] as String?,
+                    license = it["license"] as String?,
                     copyrightHolder = makeCopyRightHolder(it),
                     notice = it["notice"] as String?,
-                    url = it.getOrDefault("url", "") as String,
+                    url = it["url"] as String?,
                     licenseUrl = it["licenseUrl"] as String?,
                     skip = it.getOrDefault("skip", "false").toString().toBoolean(),
                     forceGenerate = it.getOrDefault(

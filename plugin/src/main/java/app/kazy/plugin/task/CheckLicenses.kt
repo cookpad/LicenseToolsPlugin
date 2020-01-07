@@ -88,7 +88,7 @@ object CheckLicenses {
         if (libraryInfo.licenseUrl?.isNotBlank() == true) {
             text.append("  licenseUrl: ${libraryInfo.licenseUrl}\n")
         }
-        if (libraryInfo.url.isNotBlank()) {
+        if (libraryInfo.url?.isNotBlank() == true) {
             text.append("  url: ${libraryInfo.url}\n")
         }
         return text.toString().trim()
@@ -125,7 +125,7 @@ object CheckLicenses {
         try {
             artifactId = ArtifactId.parse(dependencyDesc)
         } catch (e: IllegalArgumentException) {
-            project.logger.info("Unsupport dependency: $dependencyDesc")
+            project.logger.info("UnSupport dependency: $dependencyDesc")
             return null
         }
         val pomDependency = project.dependencies.create("$dependencyDesc@pom")

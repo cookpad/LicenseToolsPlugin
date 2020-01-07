@@ -2,10 +2,10 @@ package app.kazy.plugin.data
 
 data class LibraryInfo(
     val artifactId: ArtifactId,
-    val name: String,
-    val libraryName: String,
-    val fileName: String,
-    val url: String,
+    val name: String? = null,
+    val libraryName: String? = null,
+    val url: String? = null,
+    val fileName: String? = null,
     val license: String? = null,
     val year: String? = null,
     val copyrightHolder: String? = null,
