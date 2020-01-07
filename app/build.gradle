@@ -1,11 +1,20 @@
+plugins {
+    id "app.kazy.plugin.license-tools" version "0.0.7"
+}
+//# Connect MavenLocal
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//    }
+//    dependencies {
+//        classpath 'app.kazy.plugin:license-tools:0.0.7'
+//    }
+//}
+//apply plugin: 'app.kazy.plugin.license-tools'
+
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
-//apply plugin: 'app.kazy.license-tools-plugin'
-//apply plugin: 'com.cookpad.android.licensetools'
 
 
 android {
