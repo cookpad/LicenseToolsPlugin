@@ -1,0 +1,4 @@
+- artifact: com.example:example-common:+
+  name: example-common
+  copyrightHolder: Example Author
+  license: bsd_3_clauses
