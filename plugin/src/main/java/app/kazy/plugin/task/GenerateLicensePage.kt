@@ -7,6 +7,7 @@ import app.kazy.plugin.extension.writeLicenseHtml
 import app.kazy.plugin.util.YamlUtils
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.internal.impldep.com.google.common.annotations.VisibleForTesting
 
 object GenerateLicensePage {
     fun register(project: Project): Task {
@@ -17,7 +18,8 @@ object GenerateLicensePage {
         }
     }
 
-    private fun List<LibraryInfo>.toHtml(): String {
+    @VisibleForTesting
+    fun List<LibraryInfo>.toHtml(): String {
         val licenseHtml = StringBuffer()
         this.filterNot { it.skip ?: false }
             .forEach { licenseHtml.append(Templates.buildLicenseHtml(it)) }

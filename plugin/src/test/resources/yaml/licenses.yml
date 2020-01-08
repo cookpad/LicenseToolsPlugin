@@ -1,0 +1,55 @@
+- artifact: org.koin:koin-android:+
+  name: koin-android
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-androidx-ext:+
+  name: koin-androidx-ext
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-androidx-scope:+
+  name: koin-androidx-scope
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-androidx-viewmodel:+
+  name: koin-androidx-viewmodel
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-core-ext:+
+  name: koin-core-ext
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-core:+
+  name: koin-core
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.koin:koin-java:+
+  name: koin-java
+  copyrightHolder: Arnaud GIULIANI, Laurent BARESSE
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+- artifact: org.permissionsdispatcher:permissionsdispatcher-annotation:+
+  name: permissionsdispatcher-annotation
+  copyrightHolder: Copyright 2016 Shintaro Katafuchi, Marcel Schnelle, Yoshinori Isogai
+  license: Apache License 2.0
+- artifact: org.permissionsdispatcher:permissionsdispatcher:+
+  name: permissionsdispatcher
+  copyrightHolder: Copyright 2016 Shintaro Katafuchi, Marcel Schnelle, Yoshinori Isogai
+  license: Apache License 2.0
+- artifact: org.reactivestreams:reactive-streams:+
+  name: reactive-streams
+  copyrightHolder: '#COPYRIGHT_HOLDER#'
+  license: CC0
+  url: http://www.reactive-streams.org/
+  licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/
+  skip: true
+- artifact: org.threeten:threetenbp:+
+  name: ThreeTen backport
+  copyrightHolder: Stephen Colebourne & Michael Nascimento Santos
+  license: BSD 3-clause
+  url: https://www.threeten.org/threetenbp
