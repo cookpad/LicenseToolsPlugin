@@ -2,7 +2,7 @@
     <!-- https://developer.android.com/studio/terms.html -->
     <h1 class="title">${library.name}</h1>
     <p class="notice">${library.copyrightStatement.replaceAll("\n", "<br/>")}</p>
-    <% print library.url?.isEmpty() ? "" : """<p><a href="${library.url}">${library.url}</a></p>"""
+    <% print library.url == null || library.url.isEmpty() ? "" : """<p><a href="${library.url}">${library.url}</a></p>"""
     %>
     <p>Terms and conditions</p>
     <input type="checkbox"><label></label>
