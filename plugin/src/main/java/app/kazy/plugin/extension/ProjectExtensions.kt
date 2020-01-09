@@ -15,6 +15,14 @@ fun Project.writeLicenseHtml(html: String) {
     file("$assetsDir/${ext.outputHtml}").writeText(html)
 }
 
+fun Project.writeLicenseJson(json: String) {
+    val ext = extensions.getByType(LicenseToolsPluginExtension::class.java)
+    val assetsDir = file("src/main/assets")
+    assetsDir.mkdirs()
+    logger.info("render $assetsDir/${ext.outputJson}")
+    file("$assetsDir/${ext.outputHtml}").writeText(json)
+}
+
 fun Project.writeLicenseYaml(yaml: String) {
     val ext = extensions.getByType(LicenseToolsPluginExtension::class.java)
     logger.info("render ./${ext.licensesYaml}")

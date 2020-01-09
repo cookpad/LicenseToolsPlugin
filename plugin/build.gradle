@@ -5,6 +5,7 @@ plugins {
     id 'com.gradle.plugin-publish' version '0.10.1'
 }
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: 'kotlin-kapt'
 
 pluginBundle {
     website = 'https://github.com/kazy1991/LicenseToolsPlugin'
@@ -34,6 +35,9 @@ dependencies {
     implementation localGroovy()
     implementation "org.simpleframework:simple-xml:2.7.1"
     implementation "org.yaml:snakeyaml:1.25"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-android:3.1.0'
