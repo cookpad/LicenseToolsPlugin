@@ -65,7 +65,7 @@ data class LibraryInfo(
                     || gpl3_d.matches(license) -> "gpl3"
             mopub_sdk_license_a.matches(license)
                     || mopub_sdk_license_b.matches(license) -> "mopub_sdk_license"
-            firebase_license.matches(license) -> "android_software_development_kit_license"
+            android_software_license.matches(license) -> "android_software_development_kit_license"
             else -> license
         }
     }
@@ -133,6 +133,6 @@ data class LibraryInfo(
         val gpl3_d = """(?i).*\bgpl\b.*""".toRegex()
         val mopub_sdk_license_a = """(?i).*\bmopub\b.*""".toRegex()
         val mopub_sdk_license_b = """(?i).*\bmopub\b.*\bsdk\b.*\blicense\b.*""".toRegex()
-        val firebase_license = """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
+        val android_software_license = """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
     }
 }
