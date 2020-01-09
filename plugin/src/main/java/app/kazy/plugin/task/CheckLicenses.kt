@@ -47,29 +47,38 @@ object CheckLicenses {
 
             if (notDocumented.isNotEmpty()) {
                 project.logger.warn("# Libraries not listed in ${ext.licensesYaml}:")
-                notDocumented.forEach { libraryInfo ->
-                    val text = generateLibraryInfoText(libraryInfo)
-                    project.logger.warn(text)
-                }
+                notDocumented
+                    .distinctBy { it.artifactId.withWildcardVersion() }
+                    .sortedBy { it.artifactId.withWildcardVersion() }
+                    .forEach { libraryInfo ->
+                        val text = generateLibraryInfoText(libraryInfo)
+                        project.logger.warn(text)
+                    }
             }
 
             if (notInDependencies.isNotEmpty()) {
                 project.logger.warn("# Libraries listed in ${ext.licensesYaml} but not in dependencies:")
-                notInDependencies.forEach { libraryInfo ->
-                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n")
-                }
+                notInDependencies
+                    .sortedBy { it.artifactId.withWildcardVersion() }
+                    .forEach { libraryInfo ->
+                        project.logger.warn("- artifact: ${libraryInfo.artifactId}\n")
+                    }
             }
             if (licensesUnMatched.isNotEmpty()) {
                 project.logger.warn("# Licenses not matched with pom.xml in dependencies:")
-                licensesUnMatched.forEach { libraryInfo ->
-                    project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
-                }
+                licensesUnMatched
+                    .sortedBy { it.artifactId.withWildcardVersion() }
+                    .forEach { libraryInfo ->
+                        project.logger.warn("- artifact: ${libraryInfo.artifactId}\n  license: ${libraryInfo.license}")
+                    }
             }
             if (duplicatedArtifactIds.isNotEmpty()) {
                 project.logger.warn("# Libraries is duplicated listed in ${ext.licensesYaml}:")
-                duplicatedArtifactIds.forEach { artifactId ->
-                    project.logger.warn("- artifact: $artifactId\n")
-                }
+                duplicatedArtifactIds
+                    .sorted()
+                    .forEach { artifactId ->
+                        project.logger.warn("- artifact: $artifactId\n")
+                    }
             }
             throw GradleException("checkLicenses: missing libraries in ${ext.licensesYaml}")
         }.also {
