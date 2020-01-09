@@ -91,9 +91,9 @@ object CheckLicenses {
     fun generateLibraryInfoText(libraryInfo: LibraryInfo): String {
         val text = StringBuffer()
         text.append("- artifact: ${libraryInfo.artifactId.withWildcardVersion()}\n")
-        text.append("  name: ${libraryInfo.name}\n")
+        text.append("  name: ${libraryInfo.name ?: "#NAME#"}\n")
         text.append("  copyrightHolder: ${libraryInfo.copyrightHolder ?: "#COPYRIGHT_HOLDER#"}\n")
-        text.append("  license: ${libraryInfo.license}\n")
+        text.append("  license: ${libraryInfo.license ?: "#LICENSE#"}\n")
         if (libraryInfo.licenseUrl?.isNotBlank() == true) {
             text.append("  licenseUrl: ${libraryInfo.licenseUrl}\n")
         }
