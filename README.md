@@ -1,4 +1,4 @@
-# License Tools Plugin for Android [![Actions Status](https://github.com/kazy1991/LicenseToolsPlugin/workflows/Android%20CI/badge.svg)](https://github.com/kazy1991/LicenseToolsPlugin/actions) [![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/app/kazy/plugin/license-tools/app.kazy.plugin.license-tools.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=gradle%20potal)](https://plugins.gradle.org/plugin/app.kazy.plugin.license-tools)
+# License Tools Plugin for Android [![Actions Status](https://github.com/kazy1991/LicenseToolsPlugin/workflows/Android%20CI/badge.svg)](https://github.com/kazy1991/LicenseToolsPlugin/actions) [![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/app/kazy/plugin/license-tools/app.kazy.plugin.license-tools.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=gradle%20potal)](https://plugins.gradle.org/plugin/app.kazy.plugin.license-tools)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Setup
 
