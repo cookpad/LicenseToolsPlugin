@@ -1,2 +1,3 @@
 include ':app', ':plugin'
 rootProject.name='LicenseToolsPlugin'
+include ':tiny_yaml_writer'
