@@ -1,7 +1,14 @@
-//plugins {
-//    id "com.cookpad.android.plugin.license-tools" version "0.0.7"
-//}
-
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.cookpad.android.plugin:license-tools:0.0.11'
+    }
+}
+apply plugin: 'com.cookpad.android.plugin.license-tools'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'

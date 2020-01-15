@@ -1,2 +1,2 @@
-include ':app', ':plugin'
+include ':sample', ':plugin'
 rootProject.name='LicenseToolsPlugin'
