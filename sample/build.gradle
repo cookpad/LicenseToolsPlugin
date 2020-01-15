@@ -1,14 +1,14 @@
-buildscript {
-    repositories {
-        google()
-        jcenter()
-        mavenLocal()
-    }
-    dependencies {
-        classpath 'com.cookpad.android.plugin:license-tools:0.0.11'
-    }
-}
-apply plugin: 'com.cookpad.android.plugin.license-tools'
+//buildscript {
+//    repositories {
+//        google()
+//        jcenter()
+//        mavenLocal()
+//    }
+//    dependencies {
+//        classpath 'com.cookpad.android.plugin:license-tools:0.0.11'
+//    }
+//}
+//apply plugin: 'com.cookpad.android.plugin.license-tools'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -40,15 +40,15 @@ android {
     }
 }
 
-licenseTools {
-    ignoredGroups = [
-            'com.crashlytics.sdk.android',
-            'io.fabric.sdk.android',
-    ]
-    ignoredProjects = [
-            'plugin',
-    ]
-}
+//licenseTools {
+//    ignoredGroups = [
+//            'com.crashlytics.sdk.android',
+//            'io.fabric.sdk.android',
+//    ]
+//    ignoredProjects = [
+//            'plugin',
+//    ]
+//}
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
