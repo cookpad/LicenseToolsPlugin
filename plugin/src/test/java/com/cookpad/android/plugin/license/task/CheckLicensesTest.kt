@@ -1,6 +1,5 @@
 package com.cookpad.android.plugin.license.task
 
-import com.cookpad.android.plugin.license.task.CheckLicenses
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

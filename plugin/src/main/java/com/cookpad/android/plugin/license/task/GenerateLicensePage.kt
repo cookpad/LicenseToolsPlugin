@@ -1,8 +1,8 @@
 package com.cookpad.android.plugin.license.task
 
 import com.cookpad.android.plugin.license.LicenseToolsPluginExtension
-import com.cookpad.android.plugin.license.data.LibraryInfo
 import com.cookpad.android.plugin.license.Templates
+import com.cookpad.android.plugin.license.data.LibraryInfo
 import com.cookpad.android.plugin.license.extension.writeLicenseHtml
 import com.cookpad.android.plugin.license.util.YamlUtils
 import org.gradle.api.Project
