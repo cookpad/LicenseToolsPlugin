@@ -8,18 +8,18 @@ apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'kotlin-kapt'
 
 pluginBundle {
-    website = 'https://github.com/kazy1991/LicenseToolsPlugin'
-    vcsUrl = 'https://github.com/kazy1991/LicenseToolsPlugin.git'
+    website = 'https://github.com/cookpad/LicenseToolsPlugin'
+    vcsUrl = 'https://github.com/cookpad/LicenseToolsPlugin.git'
     tags = ['android', 'license']
 }
 
 gradlePlugin {
     plugins {
         licenseToolsPlugin {
-            id = 'app.kazy.plugin.license-tools'
+            id = 'com.cookpad.android.plugin.license-tools'
             displayName = 'LicenseToolsPlugin'
             description = 'Gradle plugin to check library licenses and generate license pages.'
-            implementationClass = 'app.kazy.plugin.LicenseToolsPlugin'
+            implementationClass = 'com.cookpad.android.plugin.license.LicenseToolsPlugin'
         }
     }
 }
@@ -27,7 +27,7 @@ gradlePlugin {
 apply plugin: 'maven'
 
 archivesBaseName = 'license-tools'
-group = 'app.kazy.plugin'
+group = 'com.cookpad.android.plugin'
 version = '0.0.11'
 
 dependencies {

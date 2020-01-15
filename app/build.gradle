@@ -1,28 +1,16 @@
-plugins {
-    id "app.kazy.plugin.license-tools" version "0.0.7"
-}
-//# Connect MavenLocal
-//buildscript {
-//    repositories {
-//        mavenLocal()
-//    }
-//    dependencies {
-//        classpath 'app.kazy.plugin:license-tools:0.0.7'
-//    }
+//plugins {
+//    id "com.cookpad.android.plugin.license-tools" version "0.0.7"
 //}
-//apply plugin: 'app.kazy.plugin.license-tools'
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "app.kazy.license_tools_plugin"
+        applicationId "com.cookpad.android.license_tools_plugin"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
