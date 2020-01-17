@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/cookpad/android/plugin/license-tools/com.cookpad.android.plugin.license-tools.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=gradle%20potal)](https://plugins.gradle.org/plugin/com.cookpad.android.plugin.license-tools) 
 
+This repository is a replacement project of [cookpad/license-tools-plugin](https://github.com/cookpad/license-tools-plugin) written with kotlin
+
 ## Setup
 
 **Recommend**
