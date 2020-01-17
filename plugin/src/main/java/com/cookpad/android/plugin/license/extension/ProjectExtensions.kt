@@ -20,7 +20,7 @@ fun Project.writeLicenseJson(json: String) {
     val assetsDir = file("src/main/assets")
     assetsDir.mkdirs()
     logger.info("render $assetsDir/${ext.outputJson}")
-    file("$assetsDir/${ext.outputHtml}").writeText(json)
+    file("$assetsDir/${ext.outputJson}").writeText(json)
 }
 
 fun Project.writeLicenseYaml(yaml: String) {
