@@ -24,13 +24,13 @@ object GenerateLicenseJson {
 
     @VisibleForTesting
     fun List<LibraryInfo>.toJson(): String {
-        val listType = Types.newParameterizedType(List::class.java, LibraryInfoJson::class.java)
-        val adapter: JsonAdapter<List<LibraryInfoJson>> = Moshi.Builder().build().adapter(listType)
+        val adapter: JsonAdapter<LibraryInfoWrapper> =
+            Moshi.Builder().build().adapter(LibraryInfoWrapper::class.java)
         return this
             .filterNot { it.skip ?: false }
             .map {
-                LibraryInfoJson(
-                    artifactId = LibraryInfoJson.ArtifactId(
+                LibraryInfoWrapper.LibraryInfoJson(
+                    artifactId = LibraryInfoWrapper.LibraryInfoJson.ArtifactId(
                         name = it.artifactId.name,
                         group = it.artifactId.group,
                         version = it.artifactId.version
@@ -47,40 +47,47 @@ object GenerateLicenseJson {
                 )
             }
             .toList()
-            .let { adapter.toJson(it) }
+            .let { adapter.toJson(LibraryInfoWrapper(libraries = it)) }
     }
 
     @JsonClass(generateAdapter = true)
-    data class LibraryInfoJson(
-        @Json(name = "artifactId")
-        val artifactId: ArtifactId,
-        @Json(name = "notice")
-        val notice: String?,
-        @Json(name = "copyrightHolder")
-        val copyrightHolder: String?,
-        @Json(name = "copyrightStatement")
-        val copyrightStatement: String?,
-        @Json(name = "license")
-        val license: String?,
-        @Json(name = "licenseUrl")
-        val licenseUrl: String?,
-        @Json(name = "normalizedLicense")
-        val normalizedLicense: String?,
-        @Json(name = "year")
-        val year: String?,
-        @Json(name = "url")
-        val url: String?,
-        @Json(name = "libraryName")
-        val libraryName: String?
+    data class LibraryInfoWrapper(
+        @Json(name = "libraries")
+        val libraries: List<LibraryInfoJson>
     ) {
         @JsonClass(generateAdapter = true)
-        data class ArtifactId(
-            @Json(name = "name")
-            val name: String,
-            @Json(name = "group")
-            val group: String,
-            @Json(name = "version")
-            val version: String
-        )
+        data class LibraryInfoJson(
+            @Json(name = "artifactId")
+            val artifactId: ArtifactId,
+            @Json(name = "notice")
+            val notice: String?,
+            @Json(name = "copyrightHolder")
+            val copyrightHolder: String?,
+            @Json(name = "copyrightStatement")
+            val copyrightStatement: String?,
+            @Json(name = "license")
+            val license: String?,
+            @Json(name = "licenseUrl")
+            val licenseUrl: String?,
+            @Json(name = "normalizedLicense")
+            val normalizedLicense: String?,
+            @Json(name = "year")
+            val year: String?,
+            @Json(name = "url")
+            val url: String?,
+            @Json(name = "libraryName")
+            val libraryName: String?
+        ) {
+            @JsonClass(generateAdapter = true)
+            data class ArtifactId(
+                @Json(name = "name")
+                val name: String,
+                @Json(name = "group")
+                val group: String,
+                @Json(name = "version")
+                val version: String
+            )
+        }
     }
+
 }
