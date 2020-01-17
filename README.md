@@ -1,14 +1,14 @@
 # License Tools Plugin for Android   
-[![Actions Status](https://github.com/kazy1991/LicenseToolsPlugin/workflows/Android%20CI/badge.svg)](https://github.com/kazy1991/LicenseToolsPlugin/actions) 
+[![Actions Status](https://github.com/cookpad/LicenseToolsPlugin/workflows/Android%20CI/badge.svg)](https://github.com/cookpad/LicenseToolsPlugin/actions) 
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/app/kazy/plugin/license-tools/app.kazy.plugin.license-tools.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=gradle%20potal)](https://plugins.gradle.org/plugin/app.kazy.plugin.license-tools) 
+[![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/cookpad/android/plugin/license-tools/com.cookpad.android.plugin.license-tools.gradle.plugin/maven-metadata.xml.svg?colorB=007ec6&label=gradle%20potal)](https://plugins.gradle.org/plugin/com.cookpad.android.plugin.license-tools) 
 
 ## Setup
 
 **Recommend**
 ```gradle
 plugins {
-  id "app.kazy.plugin.license-tools" version "${latest_version}"
+  id "com.cookpad.android.plugin.license-tools" version "${latest_version}"
 }
 ```
 
@@ -22,11 +22,11 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.app.kazy.plugin:plugin:${latest_version}"
+    classpath "gradle.plugin.com.cookpad.android.plugin:plugin:${latest_version}"
   }
 }
 
-apply plugin: "app.kazy.plugin.license-tools"
+apply plugin: "com.cookpad.android.plugin.license-tools"
 ```
 
 [Learn how to apply plugins to subprojects](https://docs.gradle.org/current/userguide/plugins.html#sec:subprojects_plugins_dsl)
