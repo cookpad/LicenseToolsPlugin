@@ -183,8 +183,8 @@ object CheckLicenses {
     }
 
     fun resolveProjectDependencies(
-            project: Project,
-            ignoredProjects: Set<String>
+        project: Project,
+        ignoredProjects: Set<String>
     ): Set<ResolvedArtifact> {
         val projectNamesToSkip = ignoredProjects.toMutableSet()
         return getProjectDependencies(project, projectNamesToSkip)
@@ -193,8 +193,8 @@ object CheckLicenses {
     }
 
     private fun getProjectDependencies(
-            project: Project?,
-            projectNamesToSkip: MutableSet<String>
+        project: Project?,
+        projectNamesToSkip: MutableSet<String>
     ): Sequence<ResolvedArtifact> {
         project ?: return emptySequence()
         if (project.name in projectNamesToSkip) return emptySequence()
