@@ -14,9 +14,11 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Add .gradle dir
+      run: mkdir ~/.gradle
     - name: Add gradle portal token
       run: |
-        cat << EOS > /github/home/gradle.properties
+        cat << EOS > ~/.gradle/gradle.properties
         gradle.publish.key=$GRADLE_PUBLISH_KEY
         gradle.publish.secret=$GRADLE_PUBLISH_SECRET
         EOS
