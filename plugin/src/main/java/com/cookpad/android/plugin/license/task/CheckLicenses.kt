@@ -182,36 +182,37 @@ object CheckLicenses {
         )
     }
 
-    @VisibleForTesting
     fun resolveProjectDependencies(
-        project: Project?,
-        ignoredProjects: Set<String> = emptySet()
+        project: Project,
+        ignoredProjects: Set<String>
     ): Set<ResolvedArtifact> {
-        project ?: return emptySet()
-        val subProjects =
-            targetSubProjects(
-                project,
-                ignoredProjects
-            )
-        val subProjectIndex = subProjects.groupBy { it.toFormattedText() }
-        return subProjects
+        val projectNamesToSkip = ignoredProjects.toMutableSet()
+        return getProjectDependencies(project, projectNamesToSkip)
+            .distinctBy { it.toFormattedText() }
+            .toSet()
+    }
+
+    private fun getProjectDependencies(
+        project: Project?,
+        projectNamesToSkip: MutableSet<String>
+    ): Sequence<ResolvedArtifact> {
+        project ?: return emptySequence()
+        if (project.name in projectNamesToSkip) return emptySequence()
+        projectNamesToSkip.add(project.name)
+        val subProjects = targetSubProjects(project, projectNamesToSkip).associateBy {
+            it.toFormattedText()
+        }
+        return (sequenceOf(project) + subProjects.values)
             .map { it.configurations }
             .flatten()
-            .filter {
-                isConfigForDependencies(
-                    it.name
-                )
-            }
+            .filter { isConfigForDependencies(it.name) }
             .map { it.resolvedArtifacts() }
             .flatten()
             .distinctBy { it.toFormattedText() }
             .flatMap {
-                val dependencyDesc = it.toFormattedText()
-                val subProject = subProjectIndex[dependencyDesc]?.first()
-                setOf(it, *resolveProjectDependencies(
-                    subProject
-                ).toTypedArray())
-            }.toSet()
+                val subProject = subProjects[it.toFormattedText()]
+                sequenceOf(it) + getProjectDependencies(subProject, projectNamesToSkip)
+            }
     }
 
     private val dependencyKeywordPattern =
