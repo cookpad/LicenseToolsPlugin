@@ -19,6 +19,7 @@ object YamlUtils {
                     name = it["name"] as String?,
                     libraryName = it["name"] as String?,
                     license = it["license"] as String?,
+                    year = (it["year"] as Int?)?.toString(),
                     copyrightHolder = makeCopyRightHolder(
                         it
                     ),
