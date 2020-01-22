@@ -1,0 +1,7 @@
+- artifact: com.squareup.okhttp3:okhttp:+
+  name: OkHttp
+  copyrightHolder: Square, Inc.
+  year: 2019
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/square/okhttp
