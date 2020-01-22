@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright (c) 2016 Cookpad Inc.
+
 package com.cookpad.android.plugin.license.util
 
 import com.cookpad.android.plugin.license.data.ArtifactId
