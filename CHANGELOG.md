@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 1.2.0 *(2020-01-22)*
+----------------------------
+
+- [#17](https://github.com/cookpad/LicenseToolsPlugin/issues/17) Fix looping while resolving project dependencies.
+- [#18](https://github.com/cookpad/LicenseToolsPlugin/issues/18) `year` is not output in generated HTML page
+- [#19](https://github.com/cookpad/LicenseToolsPlugin/issues/19) Need change logs or release notes
+- [#20](https://github.com/cookpad/LicenseToolsPlugin/issues/20) Update Copyright text
+
 Version 1.1.0 *(2020-01-17)*
 ----------------------------
 
