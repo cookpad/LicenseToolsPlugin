@@ -28,7 +28,7 @@ apply plugin: 'maven'
 
 archivesBaseName = 'license-tools'
 group = 'com.cookpad.android.plugin'
-version = '1.2.0'
+version = System.getenv('TAG_VERSION')
 
 dependencies {
     compileOnly gradleApi()
