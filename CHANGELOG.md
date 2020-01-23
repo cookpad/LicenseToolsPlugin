@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.2.1 *(2020-01-23)*
+----------------------------
+
+- [#21](https://github.com/cookpad/LicenseToolsPlugin/issues/21) Setup publish action
+
 Version 1.2.0 *(2020-01-22)*
 ----------------------------
 
