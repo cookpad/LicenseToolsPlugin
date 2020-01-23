@@ -152,3 +152,12 @@ Available configuration fields:
   url: https://github.com/bumptech/glide
   licenseUrl: http://www.opensource.org/licenses/bsd-license
 ```
+
+## Release Engineering
+
+1. Update CHANGELOG.md & Commit
+1. `git tag $next_version` (i.g. git tag 1.2.0)
+1. `git push orgin master --tags` 
+1. Fire [publish action](https://github.com/cookpad/LicenseToolsPlugin/actions?query=workflow%3APublish) (automatically)
+
+After that check https://plugins.gradle.org/plugin/com.cookpad.android.plugin.license-tools
