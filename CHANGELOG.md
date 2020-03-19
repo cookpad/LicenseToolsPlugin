@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2.2 *(2020-03-19)*
+----------------------------
+
+- [#29](https://github.com/cookpad/LicenseToolsPlugin/pull/29) Support nested sub-projects(sub-modules)
+- [#28](https://github.com/cookpad/LicenseToolsPlugin/pull/28) Bump up versions(Gradle, AGP and truth)
+
 Version 1.2.1 *(2020-01-23)*
 ----------------------------
 
