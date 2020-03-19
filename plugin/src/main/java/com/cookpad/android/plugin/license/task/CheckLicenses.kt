@@ -137,7 +137,9 @@ object CheckLicenses {
     @VisibleForTesting
     fun targetSubProjects(project: Project, ignoredProjects: Set<String>): List<Project> {
         return project.rootProject.subprojects
-            .filter { !ignoredProjects.contains(it.name) }
+            .filterNot {
+                ignoredProjects.contains(it.name) || ignoredProjects.contains(it.path) || it.subprojects.isNotEmpty()
+            }
     }
 
     @VisibleForTesting
@@ -158,11 +160,11 @@ object CheckLicenses {
         }
         val pomDependency = project.dependencies.create("$dependencyDesc@pom")
         val pomConfiguration = project.configurations.detachedConfiguration(pomDependency)
-        pomConfiguration.resolve().forEach { file ->
-            project.logger.info("POM: $file")
-        }
         val pomStream: File
         try {
+            pomConfiguration.resolve().forEach { file ->
+                project.logger.info("POM: $file")
+            }
             pomStream = pomConfiguration.resolve().toList().first()
         } catch (e: Exception) {
             project.logger.warn("Unable to retrieve license for $dependencyDesc")
