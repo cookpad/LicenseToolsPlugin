@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.2.3 *(2020-10-27)*
+----------------------------
+
+- [#38](https://github.com/cookpad/LicenseToolsPlugin/pull/38) Add Amazon Software License template
+
 Version 1.2.2 *(2020-03-19)*
 ----------------------------
 
