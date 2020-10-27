@@ -53,3 +53,9 @@
   copyrightHolder: Stephen Colebourne & Michael Nascimento Santos
   license: BSD 3-clause
   url: https://www.threeten.org/threetenbp
+- artifact: com.amazonaws:aws-android-sdk-s3:+
+  name: aws-android-sdk-s3
+  copyrightHolder: Amazon.com, Inc.
+  license: Amazon Software License
+  licenseUrl: https://aws.amazon.com/asl/
+  url: https://github.com/aws/aws-sdk-android
