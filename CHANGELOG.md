@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.2.4 *(2020-10-27)*
+----------------------------
+
+-  Bump up com.gradle.plugin-publish version to 0.12.0
+
 Version 1.2.3 *(2020-10-27)*
 ----------------------------
 
