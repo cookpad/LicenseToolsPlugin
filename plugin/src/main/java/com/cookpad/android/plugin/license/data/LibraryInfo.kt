@@ -66,6 +66,7 @@ data class LibraryInfo(
             mopub_sdk_license_a.matches(license)
                     || mopub_sdk_license_b.matches(license) -> "mopub_sdk_license"
             android_software_license.matches(license) -> "android_software_development_kit_license"
+            amazon_software_license.matches(license) -> "amazon_software_license"
             else -> license
         }
     }
@@ -134,5 +135,6 @@ data class LibraryInfo(
         val mopub_sdk_license_a = """(?i).*\bmopub\b.*""".toRegex()
         val mopub_sdk_license_b = """(?i).*\bmopub\b.*\bsdk\b.*\blicense\b.*""".toRegex()
         val android_software_license = """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
+        val amazon_software_license = """(?i).*\bAmazon.*\bSoftware.*\bLicense\b.*""".toRegex()
     }
 }
