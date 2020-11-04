@@ -59,3 +59,8 @@
   license: Amazon Software License
   licenseUrl: https://aws.amazon.com/asl/
   url: https://github.com/aws/aws-sdk-android
+- artifact: com.google.android.play:core:+
+  name: core
+  copyrightHolder: Google Inc.
+  license: Play Core Software Development Kit Terms of Service
+  licenseUrl: https://developer.android.com/guide/playcore/license
