@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+Version 1.2.5 *(2020-11-06)*
+----------------------------
+
+- [#40](https://github.com/cookpad/LicenseToolsPlugin/pull/40) add Play Core Software Development Kit Terms of Service template #40
+
 Version 1.2.4 *(2020-10-27)*
 ----------------------------
 
