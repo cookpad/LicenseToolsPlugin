@@ -8,7 +8,7 @@ This repository is a replacement project of [cookpad/license-tools-plugin](https
 
 ## License List(sample)
 
-<img src="https://user-images.githubusercontent.com/1908396/82416675-66a3f280-9ab5-11ea-843f-6b6ca039f699.png" width=200 />
+<img src="https://user-images.githubusercontent.com/1908396/103847983-bc7ce780-50e4-11eb-804e-1837113fd61b.png" width=200 />
 
 ## Setup
 
