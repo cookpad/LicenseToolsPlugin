@@ -68,6 +68,7 @@ data class LibraryInfo(
             android_software_license.matches(license) -> "android_software_development_kit_license"
             amazon_software_license.matches(license) -> "amazon_software_license"
             play_core_software_development_kit_terms_of_service.matches(license) -> "play_core_software_development_kit_terms_of_service"
+            pushwoosh_license.matches(license) -> "pushwoosh_license"
             else -> license
         }
     }
@@ -138,5 +139,6 @@ data class LibraryInfo(
         val android_software_license = """(?i).*\bAndroid.*\bSoftware.*\bDevelopment.*\bKit.*\bLicense\b.*""".toRegex()
         val amazon_software_license = """(?i).*\bAmazon.*\bSoftware.*\bLicense\b.*""".toRegex()
         val play_core_software_development_kit_terms_of_service = """(?i).*\bPlay.*\bCore.*\bSoftware.*\bDevelopment.*\bKit.*\bTerms.*\bof.*\bService\b.*""".toRegex()
+        val pushwoosh_license = """(?i).*\bPushwoosh.*\bLicense\b.*""".toRegex()
     }
 }

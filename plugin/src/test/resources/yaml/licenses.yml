@@ -64,3 +64,9 @@
   copyrightHolder: Google Inc.
   license: Play Core Software Development Kit Terms of Service
   licenseUrl: https://developer.android.com/guide/playcore/license
+- artifact: com.pushwoosh:pushwoosh:+
+  name: pushwoosh
+  copyrightHolder: Pushwoosh, Inc.
+  license: Pushwoosh License
+  licenseUrl: https://github.com/Pushwoosh/push-notifications-sdk/blob/master/LICENSE.txt
+  url: https://www.pushwoosh.com/
