@@ -64,3 +64,9 @@
   copyrightHolder: Google Inc.
   license: Play Core Software Development Kit Terms of Service
   licenseUrl: https://developer.android.com/guide/playcore/license
+- artifact: com.example:cc-by-4.0:+
+  name: cc-by-4.0 example
+  copyrightHolder: Some creative author
+  license: cc-by-4.0
+  licenseUrl: https://creativecommons.org/licenses/by/4.0/legalcode
+  url: https://creativecommons.org/
