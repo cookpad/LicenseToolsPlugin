@@ -2,7 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
     id "org.jlleitschuh.gradle.ktlint" version "10.0.0"
     id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.12.0'
+    id 'com.gradle.plugin-publish' version '0.13.0'
 }
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'kotlin-kapt'
