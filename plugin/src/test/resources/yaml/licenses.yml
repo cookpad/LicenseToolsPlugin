@@ -70,3 +70,9 @@
   license: Pushwoosh License
   licenseUrl: https://github.com/Pushwoosh/push-notifications-sdk/blob/master/LICENSE.txt
   url: https://www.pushwoosh.com/
+- artifact: com.example:cc-by-4.0:+
+  name: cc-by-4.0 example
+  copyrightHolder: Some creative author
+  license: cc-by-4.0
+  licenseUrl: https://creativecommons.org/licenses/by/4.0/legalcode
+  url: https://creativecommons.org/

@@ -47,6 +47,7 @@ data class LibraryInfo(
             facebook_platform_license.matches(license) -> "facebook_platform_license"
             cc0_a.matches(license)
                     || cc0_b.matches(license) -> "cc0"
+            cc_by_4.matches(license) -> "cc_by_4_0"
             cddl_a.matches(license)
                     || cddl_b.matches(license) -> "cddl1"
             lgpl2_1_a.matches(license)
@@ -118,6 +119,7 @@ data class LibraryInfo(
             """(?i).*\bfacebook\b.*\bplatform\b.*\blicense\b.*""".toRegex()
         val cc0_a = """(?i).*\bcc0\b.*""".toRegex()
         val cc0_b = """(?i).*\bcreative\b.commons\b.*\b.*""".toRegex()
+        val cc_by_4 = """(?i).*\bcc-by-4\.0\b.*\b.*""".toRegex()
         val cddl_a = """(?i).*\bcommon\b.*\bdevelopment\b.*\bdistribution\b.*""".toRegex()
         val cddl_b = """(?i).*\bcddl\b.*""".toRegex()
         val lgpl2_1_a = """(?i).*\bgnu\b.*\blesser\b.*\bgeneral\b.*\bpublic\b.*2.*""".toRegex()
