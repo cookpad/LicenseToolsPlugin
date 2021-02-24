@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.2.6 *(2021-02-24)*
+----------------------------
+- [#67](https://github.com/cookpad/LicenseToolsPlugin/pull/67) Clean up sample app #67
+- [#78](https://github.com/cookpad/LicenseToolsPlugin/pull/78) Add cc-by-4.0 template #78
+- [#80](https://github.com/cookpad/LicenseToolsPlugin/pull/80) Add Pushwoosh license #80
+
 Version 1.2.5 *(2020-11-06)*
 ----------------------------
 
