@@ -13,7 +13,7 @@
 //apply plugin: 'com.cookpad.android.plugin.license-tools'
 
 plugins {
-    id "com.cookpad.android.plugin.license-tools" version "1.2.5"
+    id "com.cookpad.android.plugin.license-tools" version "1.2.6"
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
