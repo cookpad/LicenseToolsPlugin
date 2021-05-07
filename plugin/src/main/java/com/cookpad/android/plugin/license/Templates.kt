@@ -6,22 +6,26 @@ package com.cookpad.android.plugin.license
 import com.cookpad.android.plugin.license.data.LibraryInfo
 import com.cookpad.android.plugin.license.exception.NotEnoughInformationException
 import groovy.text.SimpleTemplateEngine
+import org.codehaus.groovy.runtime.DefaultGroovyMethods
+import org.codehaus.groovy.runtime.IOGroovyMethods
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.net.JarURLConnection
 import java.net.URISyntaxException
 import java.net.URL
-import java.util.LinkedHashMap
 import java.util.zip.ZipFile
-import org.codehaus.groovy.runtime.DefaultGroovyMethods
-import org.codehaus.groovy.runtime.IOGroovyMethods
 
 object Templates {
 
     private val templateEngine = SimpleTemplateEngine()
 
-    @Throws(IOException::class, URISyntaxException::class, ClassNotFoundException::class)
+    @Throws(
+        IOException::class,
+        URISyntaxException::class,
+        ClassNotFoundException::class,
+        NotEnoughInformationException::class
+    )
     fun buildLicenseHtml(library: LibraryInfo): String {
         assertLicenseAndStatement(
             library
@@ -41,16 +45,20 @@ object Templates {
         return templateEngine.createTemplate(templateText).make(map).toString()
     }
 
+    @Throws(NotEnoughInformationException::class)
     private fun assertLicenseAndStatement(library: LibraryInfo) {
         if (library.license.isNullOrBlank()) {
             throw NotEnoughInformationException(
-                library
+                library,
+                "Missing info in the \"license\" field"
             )
         }
 
         if (library.getCopyrightStatement() == null) {
             throw NotEnoughInformationException(
-                library
+                library,
+                "Could not generate the copyright statement. " +
+                    "Please provide either the \"notice\" field or the \"copyrightHolder\" field."
             )
         }
     }

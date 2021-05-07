@@ -1,0 +1,15 @@
+- artifact: com.moat.analytics.mobile.mpub:moat-mobile-app-kit:+
+  name: moat-mobile-app-kit
+  copyrightHolder: Moat
+  license: #LICENSE#
+  licenseUrl: https://s3.amazonaws.com/moat-sdk-builds/license/LICENSE.txt
+- artifact: org.yaml:snakeyaml:+
+  name: SnakeYAML
+  copyrightHolder: #COPYRIGHT_HOLDER#
+  license: Apache License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://www.snakeyaml.org
+- artifact: com.squareup.okio:okio:+
+  name: Okio
+  copyrightHolder: Square, Inc.
+  license: apache2
