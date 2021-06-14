@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 1.2.8 *(2021-06-14)*
+----------------------------
+- [#104](https://github.com/cookpad/LicenseToolsPlugin/pull/104) Dedup and sort licenses in updating licenses task #104
+- [#108](https://github.com/cookpad/LicenseToolsPlugin/pull/108) Provide error messages for developers in the "generateLicensePage" task #108
+- and dependencies version up
+
+
 Version 1.2.6 *(2021-02-24)*
 ----------------------------
 - [#67](https://github.com/cookpad/LicenseToolsPlugin/pull/67) Clean up sample app #67
