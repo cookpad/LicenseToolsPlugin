@@ -1,8 +1,8 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
-    id "org.jlleitschuh.gradle.ktlint" version "10.0.0"
+    id "org.jlleitschuh.gradle.ktlint" version "10.1.0"
     id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.14.0'
+    id 'com.gradle.plugin-publish' version '0.15.0'
 }
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: 'kotlin-kapt'
@@ -34,14 +34,14 @@ dependencies {
     compileOnly gradleApi()
     implementation localGroovy()
     implementation "org.simpleframework:simple-xml:2.7.1"
-    implementation "org.yaml:snakeyaml:1.28"
+    implementation "org.yaml:snakeyaml:1.29"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-android:3.9.0'
+    testImplementation 'org.mockito:mockito-core:3.11.1'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
-    testImplementation "com.google.truth:truth:1.1.2"
+    testImplementation "com.google.truth:truth:1.1.3"
 }
 
