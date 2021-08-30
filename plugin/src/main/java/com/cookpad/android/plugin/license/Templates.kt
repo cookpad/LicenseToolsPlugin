@@ -47,7 +47,7 @@ object Templates {
 
     @Throws(NotEnoughInformationException::class)
     private fun assertLicenseAndStatement(library: LibraryInfo) {
-        if (library.license.isNullOrBlank()) {
+        if (library.license.isNullOrBlank() && library.customLicenseName.isNullOrBlank()) {
             throw NotEnoughInformationException(
                 library,
                 "Missing info in the \"license\" field"

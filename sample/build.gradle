@@ -7,7 +7,7 @@
 //        mavenLocal()
 //    }
 //    dependencies {
-//        classpath 'com.cookpad.android.plugin:license-tools:$your_version'
+//        classpath 'com.cookpad.android.plugin:license-tools:1.2.9'
 //    }
 //}
 //apply plugin: 'com.cookpad.android.plugin.license-tools'

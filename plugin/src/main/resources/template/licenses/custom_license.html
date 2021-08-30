@@ -1,0 +1,9 @@
+<div class="library">
+  <h1 class="title">${library.name}</h1>
+  <p class="notice">${library.copyrightStatement.replaceAll("\n\n", "<br/>")}</p>
+  <% print library.url == null || library.url.isEmpty() ? "" : """<p><a href="${library.url}">${library.url}</a></p>""" %>
+  <div class="license">
+    <h2>${library.customLicenseName}</h2>
+    ${library.customLicenseContent}
+  </div>
+</div>

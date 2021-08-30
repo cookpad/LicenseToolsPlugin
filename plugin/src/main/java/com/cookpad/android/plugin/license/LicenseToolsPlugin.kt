@@ -3,10 +3,7 @@
 
 package com.cookpad.android.plugin.license
 
-import com.cookpad.android.plugin.license.task.CheckLicenses
-import com.cookpad.android.plugin.license.task.GenerateLicenseJson
-import com.cookpad.android.plugin.license.task.GenerateLicensePage
-import com.cookpad.android.plugin.license.task.UpdateLicenses
+import com.cookpad.android.plugin.license.task.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -18,6 +15,7 @@ class LicenseToolsPlugin : Plugin<Project> {
         )
         CheckLicenses.register(project)
         UpdateLicenses.register(project)
+        UpdateMissingLicenses.register(project)
         GenerateLicensePage.register(project)
         GenerateLicenseJson.register(project)
     }
