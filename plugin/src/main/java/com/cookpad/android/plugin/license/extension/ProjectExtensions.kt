@@ -12,7 +12,7 @@ fun Project.toFormattedText(): String {
 
 fun Project.writeLicenseHtml(html: String) {
     val ext = extensions.getByType(LicenseToolsPluginExtension::class.java)
-    val assetsDir = file("app/src/main/assets")
+    val assetsDir = file("src/main/assets")
     assetsDir.mkdirs()
     logger.info("render $assetsDir/${ext.outputHtml}")
     file("$assetsDir/${ext.outputHtml}").writeText(html)
@@ -20,7 +20,7 @@ fun Project.writeLicenseHtml(html: String) {
 
 fun Project.writeLicenseJson(json: String) {
     val ext = extensions.getByType(LicenseToolsPluginExtension::class.java)
-    val assetsDir = file("app/src/main/assets")
+    val assetsDir = file("src/main/assets")
     assetsDir.mkdirs()
     logger.info("render $assetsDir/${ext.outputJson}")
     file("$assetsDir/${ext.outputJson}").writeText(json)
