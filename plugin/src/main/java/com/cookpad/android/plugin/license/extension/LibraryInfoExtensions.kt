@@ -24,12 +24,14 @@ internal fun LibraryInfo.generateLibraryInfoText(updatedInfo: LibraryInfo? = nul
     if (currentName != "#NAME#" || skip != true) {
         text.append("  name: ${currentName}\n")
     }
-    if (currentCopyrightHolder != "#COPYRIGHT_HOLDER#" || skip != true) {
-        if (currentCopyrightHolder.lines().size > 1) {
-            text.append("  copyrightHolder: |\n    ${currentCopyrightHolder.replace("\n", "\n    ")}\n")
+    if (notice != null) {
+        if (notice.lines().size > 1) {
+            text.append("  notice: |\n    ${notice.replace("\n", "\n    ")}\n")
         } else {
-            text.append("  copyrightHolder: ${currentCopyrightHolder}\n")
+            text.append("  notice: ${notice}\n")
         }
+    } else if (currentCopyrightHolder != "#COPYRIGHT_HOLDER#" || skip != true) {
+        text.append("  copyrightHolder: ${currentCopyrightHolder}\n")
     }
     if (currentLicense != "#LICENSE#" || skip != true) {
         text.append("  license: ${currentLicense}\n")
