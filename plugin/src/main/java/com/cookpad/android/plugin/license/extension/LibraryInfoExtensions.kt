@@ -25,7 +25,11 @@ internal fun LibraryInfo.generateLibraryInfoText(updatedInfo: LibraryInfo? = nul
         text.append("  name: ${currentName}\n")
     }
     if (currentCopyrightHolder != "#COPYRIGHT_HOLDER#" || skip != true) {
-        text.append("  copyrightHolder: ${currentCopyrightHolder}\n")
+        if (currentCopyrightHolder.lines().size > 1) {
+            text.append("  copyrightHolder: |\n    ${currentCopyrightHolder.replace("\n", "\n    ")}\n")
+        } else {
+            text.append("  copyrightHolder: ${currentCopyrightHolder}\n")
+        }
     }
     if (currentLicense != "#LICENSE#" || skip != true) {
         text.append("  license: ${currentLicense}\n")
