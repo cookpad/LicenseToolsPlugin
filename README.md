@@ -121,6 +121,7 @@ Available configuration fields:
 | `outputJson`      | `"licenses.json"`  | The file name of the output of the `generateLicenseJson` task                                              |
 | `ignoredGroups`   | `[]` (empty array) | An array of group names the plugin will ignore (useful for internal dependencies with missing .pom files)  |
 | `ignoredProjects` | `[]` (empty array) | An array of project names the plugin will ignore (To ignore particular internal projects like custom lint) |
+| `customStyles`    | `""`               | The additional style of the output of the `generateLicensePage` task HTML file.                     |
 
 ## DataSet Format
 
