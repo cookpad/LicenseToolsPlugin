@@ -114,14 +114,14 @@ licenseTools {
 
 Available configuration fields:
 
-| Field name        | Default value      | Description                                                                                                |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
-| `licensesYaml`    | `"licenses.yml"`   | The name of the licenses yml file                                                                          |
-| `outputHtml`      | `"licenses.html"`  | The file name of the output of the `generateLicensePage` task                                              |
-| `outputJson`      | `"licenses.json"`  | The file name of the output of the `generateLicenseJson` task                                              |
-| `ignoredGroups`   | `[]` (empty array) | An array of group names the plugin will ignore (useful for internal dependencies with missing .pom files)  |
-| `ignoredProjects` | `[]` (empty array) | An array of project names the plugin will ignore (To ignore particular internal projects like custom lint) |
-
+| Field name        | Default value                       | Description                                                                                                              |
+| ----------------- | ------------------------------------| -------------------------------------------------------------------------------------------------------------------------|
+| `licensesYaml`    | `"licenses.yml"`                    | The name of the licenses yml file                                                                                        |
+| `outputHtml`      | `"licenses.html"`                   | The file name of the output of the `generateLicensePage` task                                                            |
+| `outputJson`      | `"licenses.json"`                   | The file name of the output of the `generateLicenseJson` task                                                            |
+| `ignoredGroups`   | `[]` (empty array)                  | An array of group names the plugin will ignore (useful for internal dependencies with missing .pom files)                |
+| `ignoredProjects` | `[]` (empty array)                  | An array of project names the plugin will ignore (To ignore particular internal projects like custom lint)               |
+| `originalLicenses`| `Map<String, String>()` (empty Map) | An Map<String,String> of key is license name and value is license template file that not including this plugin template. |
 ## DataSet Format
 
 ### Required Fields
