@@ -63,11 +63,12 @@ object Templates {
         }
     }
 
-    fun wrapWithLayout(content: CharSequence): String {
+    fun wrapWithLayout(content: CharSequence, customStyle: String): String {
         val templateFile = "template/layout.html"
         val map = LinkedHashMap<String, String>(1)
         map["content"] =
             makeIndent(content, 4)
+        map["custom_css"] = customStyle
         return templateEngine.createTemplate(
             readResourceContent(
                 templateFile
