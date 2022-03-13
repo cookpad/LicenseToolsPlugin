@@ -14,6 +14,8 @@ open class LicenseToolsPluginExtension {
 
     var ignoredProjects = emptySet<String>()
 
+    var originalLicenses = emptyMap<String, String>()
+
     companion object {
         const val NAME = "licenseTools"
     }

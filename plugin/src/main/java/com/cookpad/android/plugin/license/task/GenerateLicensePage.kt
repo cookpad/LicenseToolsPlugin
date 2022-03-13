@@ -30,7 +30,7 @@ object GenerateLicensePage {
         this.filterNot { it.skip ?: false }
             .forEach {
                 try {
-                    licenseHtml.append(Templates.buildLicenseHtml(it))
+                    licenseHtml.append(Templates.buildLicenseHtml(it, project))
                 } catch (exception: NotEnoughInformationException) {
                     // Print all libraries aren't enough information for develops to fix them.
                     hasError = true
@@ -41,6 +41,6 @@ object GenerateLicensePage {
             throw GradleException("generateLicensePage: more than one library isn't enough information")
         }
 
-        return Templates.wrapWithLayout(licenseHtml)
+        return Templates.wrapWithLayout(licenseHtml, project)
     }
 }

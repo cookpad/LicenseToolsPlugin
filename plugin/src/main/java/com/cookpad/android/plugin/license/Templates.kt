@@ -8,6 +8,7 @@ import com.cookpad.android.plugin.license.exception.NotEnoughInformationExceptio
 import groovy.text.SimpleTemplateEngine
 import org.codehaus.groovy.runtime.DefaultGroovyMethods
 import org.codehaus.groovy.runtime.IOGroovyMethods
+import org.gradle.api.Project
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -26,7 +27,7 @@ object Templates {
         ClassNotFoundException::class,
         NotEnoughInformationException::class
     )
-    fun buildLicenseHtml(library: LibraryInfo): String {
+    fun buildLicenseHtml(library: LibraryInfo, project: Project): String {
         assertLicenseAndStatement(
             library
         )
@@ -40,7 +41,8 @@ object Templates {
         map["library"] = library
         val templateText =
             readResourceContent(
-                templateFile
+                templateFile,
+                project
             )
         return templateEngine.createTemplate(templateText).make(map).toString()
     }
@@ -63,14 +65,15 @@ object Templates {
         }
     }
 
-    fun wrapWithLayout(content: CharSequence): String {
+    fun wrapWithLayout(content: CharSequence, project: Project): String {
         val templateFile = "template/layout.html"
         val map = LinkedHashMap<String, String>(1)
         map["content"] =
             makeIndent(content, 4)
         return templateEngine.createTemplate(
             readResourceContent(
-                templateFile
+                templateFile,
+                project
             )
         ).make(map).toString()
     }
@@ -87,9 +90,18 @@ object Templates {
         return s.toString()
     }
 
-    private fun readResourceContent(filename: String): String {
+    private fun readResourceContent(filename: String, project: Project): String {
         var templateFileUrl: URL? = Templates::class.java.classLoader.getResource(filename)
-            ?: throw FileNotFoundException("File not found: $filename")
+        if (templateFileUrl == null) {
+            project.extensions.getByType(LicenseToolsPluginExtension::class.java).originalLicenses.get(
+                filename.replace("^template/licenses/".toRegex(), "")
+                    .replace(".html$".toRegex(), "")
+            )
+                ?.let { urlString ->
+                    return project.file("./${urlString}").readText()
+                } ?: throw FileNotFoundException("File not found: $filename")
+        }
+
 
         templateFileUrl = URL(templateFileUrl.toString())
         try {
