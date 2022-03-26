@@ -34,7 +34,7 @@ dependencies {
     compileOnly gradleApi()
     implementation localGroovy()
     implementation "org.simpleframework:simple-xml:2.7.1"
-    implementation "org.yaml:snakeyaml:1.29"
+    implementation "org.yaml:snakeyaml:1.30"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
