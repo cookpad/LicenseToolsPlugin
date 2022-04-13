@@ -1,3 +1,9 @@
+# DEPRECATED
+"LicenseToolsPlugin" is no longer used internally at Cookpad. No more development will be taking place.  As an alternative, we recommend [OSS Licenses Gradle Plugin](https://github.com/google/play-services-plugins/tree/master/oss-licenses-plugin).
+
+Thanks for all your support!
+
+
 # License Tools Plugin for Android
 
 [![Actions Status](https://github.com/cookpad/LicenseToolsPlugin/workflows/Android%20CI/badge.svg)](https://github.com/cookpad/LicenseToolsPlugin/actions)
