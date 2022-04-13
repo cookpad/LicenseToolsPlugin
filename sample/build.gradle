@@ -55,6 +55,11 @@ licenseTools {
     ignoredProjects = [
             'plugin',
     ]
+
+    HashMap<String,String> licensesMap = new HashMap()
+    licensesMap.put("ML Kit Terms of Service","mlkit_license.html")
+
+    originalLicenses=licensesMap
 }
 
 dependencies {

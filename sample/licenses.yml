@@ -190,3 +190,9 @@
   license: The Apache Software License, Version 2.0
   licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
   url: http://www.jetbrains.org
+# for originalLicenses configuration sample code
+- artifact: com.google.android.gms:play-services-mlkit-barcode-scanning:+
+  name: play-services-mlkit-barcode-scanning
+  copyrightHolder: The Android Open Source Project
+  license: ML Kit Terms of Service
+  licenseUrl: https://developers.google.com/ml-kit/terms
