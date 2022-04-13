@@ -1,0 +1,17 @@
+- artifact: com.android.support:+:+
+  name: Android Support Libraries
+  copyrightHolder: The Android Open Source Project
+  license: apache2
+- artifact: com.mopub:libAvid-mopub:+
+  name: AVID SDK (MoPub Android namespace)
+  copyrightHolder: MoPub (a division of Twitter, Inc.)
+  license: MoPub SDK License
+  licenseUrl: http://www.mopub.com/legal/sdk-license-agreement/
+  url: https://github.com/mopub/mopub-android-sdk
+# This is example license
+- artifact: com.example:example-common:+
+  name: example-common
+  copyrightHolder: Example Author
+  license: #LICENSE#
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://example.com/example/example-common

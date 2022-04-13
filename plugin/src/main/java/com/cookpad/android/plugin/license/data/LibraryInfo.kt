@@ -15,7 +15,9 @@ data class LibraryInfo(
     val notice: String? = null,
     val licenseUrl: String?,
     val skip: Boolean? = null,
-    val forceGenerate: Boolean? = null
+    val forceGenerate: Boolean? = null,
+    val customLicenseName: String? = null,
+    val customLicenseContent: String? = null
 ) {
 
     fun normalizedLicense(): String {
@@ -70,6 +72,7 @@ data class LibraryInfo(
             amazon_software_license.matches(license) -> "amazon_software_license"
             play_core_software_development_kit_terms_of_service.matches(license) -> "play_core_software_development_kit_terms_of_service"
             pushwoosh_license.matches(license) -> "pushwoosh_license"
+            custom_license.matches(license) -> "custom_license"
             else -> license
         }
     }
@@ -142,5 +145,6 @@ data class LibraryInfo(
         val amazon_software_license = """(?i).*\bAmazon.*\bSoftware.*\bLicense\b.*""".toRegex()
         val play_core_software_development_kit_terms_of_service = """(?i).*\bPlay.*\bCore.*\bSoftware.*\bDevelopment.*\bKit.*\bTerms.*\bof.*\bService\b.*""".toRegex()
         val pushwoosh_license = """(?i).*\bPushwoosh.*\bLicense\b.*""".toRegex()
+        val custom_license = """(?i).*\bCustom.*\bLicense\b.*""".toRegex()
     }
 }

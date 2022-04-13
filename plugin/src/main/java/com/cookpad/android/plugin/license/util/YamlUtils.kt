@@ -33,7 +33,9 @@ object YamlUtils {
                     forceGenerate = it.getOrDefault(
                         "forceGenerate",
                         "false"
-                    ).toString().toBoolean()
+                    ).toString().toBoolean(),
+                    customLicenseName = it["customLicenseName"] as String?,
+                    customLicenseContent = it["customLicenseContent"] as String?
                 )
             }
     }
