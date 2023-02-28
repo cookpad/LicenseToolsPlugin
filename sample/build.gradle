@@ -55,6 +55,8 @@ licenseTools {
     ignoredProjects = [
             'plugin',
     ]
+
+    customStyles = file('custom_style.css').text
 }
 
 dependencies {
